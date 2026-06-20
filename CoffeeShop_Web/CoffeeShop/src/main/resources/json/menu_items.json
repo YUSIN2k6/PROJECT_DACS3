@@ -1,0 +1,119 @@
+[
+  {
+    "id": "ITEM001",
+    "name": "Cà Phê Đen",
+    "category_id": "CAT001",
+    "price": 20000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/coffee-sua.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM002",
+    "name": "Cà Phê Sữa",
+    "category_id": "CAT001",
+    "price": 25000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/coffee-den.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM003",
+    "name": "Americano",
+    "category_id": "CAT001",
+    "price": 25000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/americano.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM004",
+    "name": "Cà Phê Bạc Xỉu",
+    "category_id": "CAT001",
+    "price": 30000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/bac-xiu.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM005",
+    "name": "Trà Chanh",
+    "category_id": "CAT002",
+    "price": 25000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/tra-chanh.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM006",
+    "name": "Trà Xanh Matcha",
+    "category_id": "CAT002",
+    "price": 20000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/tra-xanh-matcha.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM007",
+    "name": "Trà Đào",
+    "category_id": "CAT002",
+    "price": 20000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/tra-dao.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM008",
+    "name": "Sinh Tố Dâu",
+    "category_id": "CAT003",
+    "price": 35000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/sinh-to-dau.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM009",
+    "name": "Sinh Tố Bơ",
+    "category_id": "CAT003",
+    "price": 35000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/sinh-to-bo.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM010",
+    "name": "Sinh Tố Xoài",
+    "category_id": "CAT003",
+    "price": 35000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/sinh-to-xoai.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM011",
+    "name": "Nước Cam Tươi",
+    "category_id": "CAT004",
+    "price": 30000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/nuoc-cam.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM012",
+    "name": "Nước Dứa Tươi",
+    "category_id": "CAT004",
+    "price": 30000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/nuoc-dua.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "ITEM013",
+    "name": "Nước Táo Tươi",
+    "category_id": "CAT004",
+    "price": 30000,
+    "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/nuoc-tao.jpg",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  }
+]

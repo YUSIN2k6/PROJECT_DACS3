@@ -1,0 +1,94 @@
+body {
+  overflow: hidden !important; /* Cấm thanh cuộn trình duyệt */
+} /* Thiết lập chiều cao cho Card để lấp đầy màn hình */
+
+.pos-card {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* KHU VỰC THỰC ĐƠN (GRID) */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Tạo 3 cột bằng nhau */
+  gap: 12px;
+  overflow-y: auto;
+  max-height: 65vh; /* Giới hạn chiều cao để cuộn chuột */
+  padding-right: 5px;
+}
+
+/* Tùy chỉnh thanh cuộn cho đẹp */
+.menu-grid::-webkit-scrollbar,
+.cart-container::-webkit-scrollbar {
+  width: 6px;
+}
+.menu-grid::-webkit-scrollbar-thumb,
+.cart-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+/* Card Món ăn */
+.menu-item-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #fcfcfc;
+}
+
+.menu-item-card:hover {
+  border-color: #d4a574; /* Màu chủ đạo quán cà phê */
+  box-shadow: 0 4px 10px rgba(212, 165, 116, 0.3);
+  transform: translateY(-3px);
+}
+
+/* Ảnh hình vuông */
+.menu-item-img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Ép tỷ lệ 1:1 thành hình vuông hoàn hảo */
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.menu-item-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #333;
+  /* Nếu tên dài quá sẽ có dấu ... */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-item-price {
+  font-size: 0.85rem;
+  color: #d4a574;
+  font-weight: bold;
+}
+
+/* KHU VỰC GIỎ HÀNG */
+.cart-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 50vh;
+}
+
+.btn-remove-item {
+  color: #dc3545;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.btn-remove-item:hover {
+  color: #a71d2a;
+}

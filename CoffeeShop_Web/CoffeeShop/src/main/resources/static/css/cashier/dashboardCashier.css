@@ -1,0 +1,200 @@
+/* ===== DASHBOARD POS LAYOUT ===== */
+.pos-layout {
+  display: flex;
+  flex-direction: row;
+  padding: 0 !important; /* Xóa padding mặc định của main-content */
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
+  background-color: #f4f6f9;
+}
+
+/* CỘT TRÁI: LƯỚI BÀN */
+.table-section {
+  flex: 1;
+  padding: 10px 20px;
+  overflow-y: auto;
+}
+
+/* Lưới tự động xuống dòng */
+.tables-vertical-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 15px;
+}
+
+.pos-table-card {
+  height: 120px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background: white;
+  position: relative;
+}
+
+.pos-table-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pos-table-card.selected {
+  border: 3px solid #333 !important;
+  transform: scale(0.98);
+}
+
+.card-number {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.card-status {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+/* Bảng màu chuẩn cho các trạng thái */
+.pos-table-card.available {
+  background-color: #e0e0e0;
+  color: #555;
+}
+.pos-table-card.occupied {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+.pos-table-card.preparing {
+  background-color: #cce5ff;
+  color: #004085;
+  border-color: #b8daff;
+}
+.pos-table-card.pending {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
+}
+.pos-table-card.served {
+  background-color: #ffe8cc;
+  color: #d35400;
+  border-color: #ffc288;
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+.filter-btn {
+  background: none;
+  border: none;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.filter-btn:hover {
+  background: #e9ecef;
+}
+.filter-btn.active {
+  background: #333;
+  color: white !important;
+}
+
+/* CỘT PHẢI: SIDEBAR ĐƠN HÀNG */
+.order-sidebar {
+  width: 400px;
+  background: #ffffff;
+  border-left: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #f8f9fa;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #f0f0f0;
+  background-color: #fff;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  color: #adb5bd;
+  margin-top: 50px;
+}
+.empty-state i {
+  font-size: 60px;
+  margin-bottom: 15px;
+}
+
+/* Order Item Row */
+.order-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border-bottom: 1px dashed #e0e0e0;
+}
+.order-item-row:last-child {
+  border-bottom: none;
+}
+.item-info {
+  flex: 1;
+}
+.item-name {
+  font-weight: bold;
+  font-size: 15px;
+  color: #333;
+}
+.item-qty {
+  font-size: 13px;
+  color: #666;
+}
+
+.btn-done-item {
+  background-color: #e8f5e9;
+  color: #28a745;
+  border: 1px solid #28a745;
+  padding: 6px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+.btn-done-item:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.item-completed-text {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.note-box {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 12px;
+  border-radius: 6px;
+}

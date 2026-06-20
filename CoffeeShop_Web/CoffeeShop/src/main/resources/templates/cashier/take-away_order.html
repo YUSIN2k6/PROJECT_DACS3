@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Takeaway - CoffeeShop</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+    />
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/take-away_order.css}" />
+  </head>
+  <body>
+    <div th:replace="~{cashier/components/sidebar :: sidebar}"></div>
+    <nav th:replace="~{cashier/components/navigator :: navbar}"></nav>
+
+    <div class="main-container">
+      <main class="main-content">
+        <div class="dashboard-content">
+          <div class="row g-3 h-100">
+            <div class="col-4">
+              <div class="card h-100 pos-card">
+                <h5 class="text-center mb-3 fw-bold">
+                  <i class="bx bx-cart"></i> Nước đã chọn
+                </h5>
+
+                <div class="table-responsive cart-container">
+                  <table class="table table-hover align-middle text-center">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="width: 50px">STT</th>
+                        <th style="text-align: left">Tên nước</th>
+                        <th style="width: 70px">SL</th>
+                        <th style="width: 100px">Thành tiền</th>
+                        <th style="width: 50px">Bỏ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="cartTableBody"></tbody>
+                  </table>
+                </div>
+
+                <div class="cart-summary mt-auto">
+                  <hr />
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <span class="fs-5 fw-bold">Tổng cộng:</span>
+                    <span class="fs-4 fw-bold text-danger" id="cartTotalAmount"
+                      >0 đ</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="card h-100 pos-card">
+                <h5 class="text-center mb-3 fw-bold">
+                  <i class="bx bx-food-menu"></i> Thực đơn
+                </h5>
+
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="searchMenuInput"
+                    placeholder="Tìm kiếm món nước..."
+                  />
+                </div>
+
+                <div class="menu-grid" id="menuGridContainer"></div>
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="card h-100 pos-card">
+                <h5 class="text-center mb-4 fw-bold">
+                  <i class="bx bx-cog"></i> Thao tác
+                </h5>
+
+                <div class="mb-3 border border-light p-2 rounded bg-light">
+                  <label
+                    class="form-label fw-bold text-muted small mb-2 d-block"
+                    ><i class="bx bx-git-branch"></i> Loại hình đơn:</label
+                  >
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="orderTypeRadio"
+                      id="radioTakeaway"
+                      value="takeaway"
+                      checked
+                      onclick="toggleOrderTypeMode()"
+                    />
+                    <label
+                      class="form-check-label fw-bold small text-success"
+                      style="cursor: pointer"
+                      for="radioTakeaway"
+                      >Mang về / Khác</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="orderTypeRadio"
+                      id="radioAddTable"
+                      value="addTable"
+                      onclick="toggleOrderTypeMode()"
+                    />
+                    <label
+                      class="form-check-label fw-bold small text-primary"
+                      style="cursor: pointer"
+                      for="radioAddTable"
+                      >Thêm món cho bàn</label
+                    >
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="form-label fw-bold text-muted small"
+                    >Áp dụng cho:</label
+                  >
+                  <select
+                    id="takeawayTableSelect"
+                    class="form-select border-2 border-dark"
+                    style="font-weight: bold; cursor: pointer"
+                  >
+                    <option value="TABLE0">Bàn 0 (Mang về / Khác)</option>
+                  </select>
+                </div>
+
+                <div class="d-flex flex-column gap-3 mt-auto">
+                  <button
+                    id="btnMainActionTakeaway"
+                    class="btn btn-success btn-lg w-100 py-3 fw-bold shadow-sm"
+                    onclick="executeMainAction()"
+                  >
+                    <i class="bx bx-check-circle fs-4 mb-1 d-block"></i> THANH
+                    TOÁN
+                  </button>
+
+                  <button
+                    class="btn btn-outline-danger w-100 py-2 fw-bold mt-auto"
+                    onclick="clearCart()"
+                  >
+                    <i class="bx bx-trash"></i> Hủy đơn
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/cashier/sidebar.js}"></script>
+    <script th:src="@{/js/cashier/navbar.js}"></script>
+
+    <script th:inline="javascript">
+      const realMenuItems = /*[[${menuItems}]]*/ [];
+      const realTables = /*[[${allTables}]]*/ [];
+    </script>
+    <script th:src="@{/js/custom-alert.js}"></script>
+    <script th:src="@{/js/cashier/take-away_order.js}"></script>
+  </body>
+</html>

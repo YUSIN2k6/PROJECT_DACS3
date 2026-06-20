@@ -1,0 +1,69 @@
+# ==========================================
+# 1. BỎ QUA FILE BẢO MẬT (RẤT QUAN TRỌNG)
+# ==========================================
+coffeeshop-c0793-firebase-adminsdk-fbsvc-2571baa6f9.json
+**/coffeeshop-c0793-firebase-adminsdk-fbsvc-2571baa6f9.json
+
+# ==========================================
+# 2. BỎ QUA THƯ MỤC BUILD CỦA JAVA/MAVEN
+# ==========================================
+target/
+build/
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ==========================================
+# 3. BỎ QUA MÔI TRƯỜNG ẢO PYTHON
+# ==========================================
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ==========================================
+# 4. BỎ QUA CẤU HÌNH IDE / EDITOR
+# ==========================================
+# VS Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse / STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ==========================================
+# 5. BỎ QUA CÁC FILE HỆ ĐIỀU HÀNH & KHÁC
+# ==========================================
+.DS_Store
+Thumbs.db
+HELP.md

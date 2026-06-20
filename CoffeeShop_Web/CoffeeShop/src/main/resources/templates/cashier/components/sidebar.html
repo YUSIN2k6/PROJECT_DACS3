@@ -1,0 +1,77 @@
+<!-- Sidebar Navigation -->
+<aside id="sidebar" class="sidebar" th:fragment="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <!-- Tình trạng -->
+      <li class="nav-title">Chức năng xử lý</li>
+      <li class="nav-item">
+        <a
+          href="/cashier/dashboardCashier"
+          class="nav-link"
+          data-path="/cashier/dashboardCashier"
+        >
+          <i class="bx bxs-dashboard"></i>
+          <span class="nav-label">Tình trạng bàn</span>
+        </a>
+      </li>
+
+      <!-- Quản lý -->
+
+      <li class="nav-item">
+        <a
+          href="/cashier/checkout"
+          class="nav-link"
+          data-path="/cashier/checkout"
+        >
+          <i class="bx bxs-user"></i>
+          <span class="nav-label">Thanh toán</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="/cashier/take-away_order"
+          class="nav-link"
+          data-path="/cashier/take-away_order"
+        >
+          <i class="bx bx-coffee-togo"></i>
+          <span class="nav-label">Thanh toán đơn mang về</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="/cashier/history"
+          class="nav-link"
+          data-path="/cashier/history"
+        >
+          <i class="bx bxs-archive"></i>
+          <span class="nav-label">Lịch sử giao dịch</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="/cashier/inventory"
+          class="nav-link"
+          data-path="/cashier/inventory"
+        >
+          <i class="bx bxs-food-menu"></i>
+          <span class="nav-label">Điều kho</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <script>
+    // Set active nav link based on current URL
+    document.addEventListener("DOMContentLoaded", function () {
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll(".sidebar .nav-link");
+
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("data-path") === currentPath) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
+</aside>

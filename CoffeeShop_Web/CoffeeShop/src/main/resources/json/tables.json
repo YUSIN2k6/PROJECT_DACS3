@@ -1,0 +1,72 @@
+[
+  {
+    "id": "TABLE001",
+    "table_number": 1,
+    "location": "Khu vực cửa sổ",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE002",
+    "table_number": 2,
+    "location": "Khu vực cửa sổ",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE003",
+    "table_number": 3,
+    "location": "Khu vực giữa",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE004",
+    "table_number": 4,
+    "location": "Khu vực giữa",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE005",
+    "table_number": 5,
+    "location": "Khu vực giữa",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE006",
+    "table_number": 6,
+    "location": "Khu vực phía sau",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE007",
+    "table_number": 7,
+    "location": "Khu vực quầy",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE008",
+    "table_number": 8,
+    "location": "Khu vực quầy",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE009",
+    "table_number": 9,
+    "location": "Khu vực lầu",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "TABLE010",
+    "table_number": 10,
+    "location": "Khu vực lầu",
+    "status": "available",
+    "createdAt": "2026-01-01T00:00:00Z"
+  }
+]

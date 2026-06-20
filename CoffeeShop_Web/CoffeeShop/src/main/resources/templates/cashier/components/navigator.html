@@ -1,0 +1,41 @@
+<!-- Top Navigation Bar -->
+<nav class="navbar" th:fragment="navbar">
+  <div class="navbar-left">
+    <div class="navbar-logo">
+      <i class="bx bxs-coffee-togo"></i>
+      <span class="logo-text">CoffeeShop</span>
+    </div>
+  </div>
+
+  <div class="navbar-center">
+    <!-- Menu Toggle -->
+    <button id="navToggleSidebar" class="nav-icon-btn" title="Toggle Sidebar">
+      <i class="bx bx-menu"></i>
+    </button>
+  </div>
+
+  <div class="navbar-right">
+    <!-- User Profile Dropdown -->
+    <div class="user-profile-dropdown">
+      <button id="userProfileBtn" class="user-profile-btn">
+        <i class="bx bxs-user fs-4"></i>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div id="userDropdownMenu" class="dropdown-menu">
+        <div class="dropdown-header">
+          <div class="user-info">
+            <h5 class="text fs-4 text-center">Tk: Thu ngân</h5>
+          </div>
+        </div>
+
+        <div class="dropdown-divider"></div>
+
+        <a href="/logout" class="dropdown-item logout-item">
+          <i class="bx bx-log-out"></i>
+          <span>Đăng xuất</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

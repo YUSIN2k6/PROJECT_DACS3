@@ -1,0 +1,244 @@
+/* ===== HISTORY MANAGEMENT PAGE STYLES ===== */
+
+/* Search and Filter */
+#searchInput,
+#filterDate {
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+#searchInput:focus,
+#filterDate:focus {
+  border-color: #d4a574;
+  box-shadow: 0 0 0 0.2rem rgba(212, 165, 116, 0.25);
+}
+
+/* Invoice Detail Card */
+#invoiceDetailCard {
+  position: sticky;
+  top: 20px;
+}
+
+.invoice-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.info-value {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Time Range Select */
+#timeRangeSelect {
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+#timeRangeSelect:focus {
+  border-color: #d4a574;
+  box-shadow: 0 0 0 0.2rem rgba(212, 165, 116, 0.25);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #d4a574;
+  border-color: #d4a574;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #c49461;
+  border-color: #c49461;
+  transform: translateY(-2px);
+  color: white;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Excel Button - Microsoft Excel Style */
+.btn-excel {
+  background-color: #00b050;
+  border-color: #00b050;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-excel:hover {
+  background-color: #00923e;
+  border-color: #00923e;
+  transform: translateY(-2px);
+  color: white;
+}
+
+.btn-excel:active {
+  transform: translateY(0);
+}
+
+.btn-excel i {
+  font-size: 1.1em;
+}
+
+/* Card Styles */
+.card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.card h4 {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Modal Styles */
+.modal-header {
+  border-bottom: 2px solid #f0f0f0;
+  background-color: #f8f9fa;
+}
+
+.modal-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid #e0e0e0;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border-color: #dee2e6;
+}
+
+.table-bordered thead th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+/* Empty Message */
+#invoiceEmptyMessage {
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+}
+
+/* Responsive - Desktop adjustments */
+@media (min-width: 992px) {
+  .main-container {
+    margin-left: 70px;
+    margin-top: 20px;
+  }
+
+  body.sidebar-collapsed .main-container {
+    margin-left: var(--sidebar-width-collapsed);
+  }
+}
+
+/* TABLET & MOBILE (<992px) */
+@media (max-width: 991px) {
+  .main-container {
+    margin-left: 0;
+    margin-top: 70px;
+  }
+
+  .main-content {
+    padding: 30px 20px 20px;
+  }
+
+  .row > .col-8,
+  .row > .col-4 {
+    max-width: 100%;
+    flex: 0 0 100%;
+    margin-bottom: 20px;
+  }
+
+  #invoiceDetailCard {
+    position: relative;
+    top: 0;
+  }
+}
+
+/* MOBILE (<768px) */
+@media (max-width: 767px) {
+  .main-container {
+    margin-left: 0;
+    margin-top: 70px;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .card h4 {
+    font-size: 18px;
+  }
+
+  .table-responsive {
+    border-radius: 6px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .page-link {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+}

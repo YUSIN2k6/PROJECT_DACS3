@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Thực Đơn - CoffeeShop</title>
+
+    <!-- Bootstrap CSS - CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Boxicons CSS - CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+    />
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+    <!-- Component CSS -->
+    <link rel="stylesheet" th:href="@{/css/admin/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/menu_management.css}" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div th:replace="admin/components/sidebar :: sidebar"></div>
+
+    <!-- Navbar -->
+    <nav th:replace="admin/components/navigator :: navbar"></nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Breadcrumb & Page Title -->
+        <div class="breadcrumb-section">
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="/admin/dashboard">Home</a>
+              </li>
+              <li class="breadcrumb-item active">Quản Lý Thực Đơn</li>
+            </ol>
+          </nav>
+          <h1 class="page-title">Quản Lý Thực Đơn</h1>
+        </div>
+
+        <!-- Menu Management Container -->
+        <div class="menu-container">
+          <!-- LEFT COLUMN - MENU TABLE -->
+          <div class="menu-table-section">
+            <h3>
+              <i class="bx bxs-list-check"></i>
+              Danh Sách Thực Đơn
+            </h3>
+
+            <!-- Search & Filter Section -->
+            <div class="search-filter-section">
+              <div class="search-box-menu">
+                <i class="bx bx-search"></i>
+                <input
+                  type="text"
+                  id="searchMenu"
+                  placeholder="Tìm kiếm nước..."
+                />
+              </div>
+
+              <div class="category-filter">
+                <select id="categoryFilter" class="form-control">
+                  <option value="">-- Tất cả danh mục --</option>
+                  <option
+                    th:each="cat : ${categoryList}"
+                    th:value="${cat.id}"
+                    th:text="${cat.name}"
+                  >
+                    Danh mục
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Table Responsive -->
+            <div class="table-responsive">
+              <table class="table table-hover text-center align-middle">
+                <thead>
+                  <tr>
+                    <th style="width: 50px">STT</th>
+                    <th style="width: 100px">Ảnh</th>
+                    <th>Tên Nước</th>
+                    <th style="width: 100px">Danh mục</th>
+                    <th style="width: 100px">Giá Tiền</th>
+                    <th style="width: 180px">Hành Động</th>
+                  </tr>
+                </thead>
+                <tbody id="menuTableBody">
+                  <tr th:each="item, iterStat : ${menuList}">
+                    <td th:text="${startEntry + iterStat.index}">1</td>
+                    <td>
+                      <img
+                        th:if="${item.imageUrl}"
+                        th:src="${item.imageUrl}"
+                        class="product-image"
+                        alt="Product"
+                      />
+                      <div th:unless="${item.imageUrl}" class="no-image">
+                        <i class="bx bx-image"></i>
+                      </div>
+                    </td>
+                    <td>
+                      <strong class="fs-6" th:text="${item.name}"
+                        >Tên nước</strong
+                      ><br />
+                    </td>
+                    <td>
+                      <span
+                        class="text fw-bold"
+                        th:each="cat : ${categoryList}"
+                        th:if="${cat.id == item.categoryId}"
+                        th:text="${cat.name}"
+                      >
+                        Tên danh mục
+                      </span>
+                    </td>
+                    <td
+                      class="price-cell"
+                      th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"
+                    >
+                      25,000 đ
+                    </td>
+                    <td>
+                      <div class="action-buttons justify-content-center">
+                        <button
+                          class="btn-sm btn-edit edit-menu-btn"
+                          th:data-id="${item.id}"
+                          title="Sửa"
+                        >
+                          <i class="bx bx-edit"></i>
+                        </button>
+                        <button
+                          class="btn-sm btn-delete delete-menu-btn"
+                          th:data-id="${item.id}"
+                          title="Xoá"
+                        >
+                          <i class="bx bx-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(menuList)}">
+                    <td colspan="5" class="empty-state text-center py-4">
+                      <i
+                        class="bx bx-inbox"
+                        style="font-size: 40px; color: #ccc"
+                      ></i>
+                      <p>Chưa có sản phẩm nào trên hệ thống</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <nav
+              aria-label="Page navigation"
+              class="mt-4"
+              th:if="${totalPages > 1}"
+            >
+              <ul
+                class="pagination justify-content-center"
+                id="paginationContainer"
+              >
+                <li
+                  class="page-item"
+                  th:classappend="${currentPage == 1} ? 'disabled'"
+                >
+                  <a
+                    class="page-link"
+                    th:href="@{/admin/menu_management(page=${currentPage - 1}, size=${pageSize})}"
+                    >Trước</a
+                  >
+                </li>
+                <li
+                  class="page-item"
+                  th:each="p : ${#numbers.sequence(1, totalPages)}"
+                  th:classappend="${p == currentPage} ? 'active'"
+                >
+                  <a
+                    class="page-link"
+                    th:href="@{/admin/menu_management(page=${p}, size=${pageSize})}"
+                    th:text="${p}"
+                    >1</a
+                  >
+                </li>
+                <li
+                  class="page-item"
+                  th:classappend="${currentPage == totalPages} ? 'disabled'"
+                >
+                  <a
+                    class="page-link"
+                    th:href="@{/admin/menu_management(page=${currentPage + 1}, size=${pageSize})}"
+                    >Sau</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <!-- RIGHT COLUMN - FORMS -->
+          <div class="menu-forms-section">
+            <!-- Menu Item Form -->
+            <div class="form-card">
+              <h4>
+                <i class="bx bxs-drink"></i>
+                <span id="formTitle">Thêm/Cập nhật Nước</span>
+              </h4>
+
+              <form id="menuForm">
+                <!-- Hidden ID field -->
+                <input type="hidden" id="menuId" />
+
+                <!-- Menu Name -->
+                <div class="form-group">
+                  <label for="menuName"
+                    >Tên Nước <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="menuName"
+                    class="form-control"
+                    placeholder="Nhập tên nước"
+                    required
+                  />
+                </div>
+
+                <!-- Category -->
+                <div class="form-group">
+                  <label for="menuCategory"
+                    >Danh Mục <span style="color: red">*</span></label
+                  >
+                  <select id="menuCategory" class="form-control" required>
+                    <option value="">-- Chọn danh mục --</option>
+                    <option
+                      th:each="cat : ${categoryList}"
+                      th:value="${cat.id}"
+                      th:text="${cat.name}"
+                    >
+                      Danh mục
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Price -->
+                <div class="form-group">
+                  <label for="menuPrice"
+                    >Giá Tiền <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="number"
+                    id="menuPrice"
+                    class="form-control"
+                    placeholder="Nhập giá tiền"
+                    step="1000"
+                    min="0"
+                    required
+                  />
+                </div>
+
+                <!-- Image -->
+                <div class="form-group">
+                  <label for="menuImage">Hình Ảnh</label>
+                  <input
+                    type="file"
+                    id="menuImage"
+                    class="form-control"
+                    accept="image/*"
+                  />
+                  <input type="hidden" id="menuImageUrl" />
+                  <small class="form-text text-muted" id="menuImageHelp"
+                    >Chọn file ảnh (JPG, PNG)</small
+                  >
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary btn-submit">
+                    <i class="bx bx-save"></i> Lưu
+                  </button>
+                  <button type="reset" class="btn btn-secondary">
+                    <i class="bx bx-reset"></i> Nhập Lại
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Category Form -->
+            <div class="form-card">
+              <h4>
+                <i class="bx bxs-folder-plus"></i>
+                <span id="categoryFormTitle">Thêm/Cập nhật Danh Mục</span>
+              </h4>
+
+              <form id="categoryForm">
+                <!-- Hidden ID field -->
+                <input type="hidden" id="categoryId" />
+
+                <!-- Category Name -->
+                <div class="form-group">
+                  <label for="categoryName"
+                    >Tên Danh Mục <span style="color: red">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="categoryName"
+                    class="form-control"
+                    placeholder="Nhập tên danh mục"
+                    required
+                  />
+                </div>
+
+                <div class="form-actions">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-category-submit"
+                  >
+                    <i class="bx bx-save"></i> Lưu Danh Mục
+                  </button>
+                  <button type="reset" class="btn btn-secondary">
+                    <i class="bx bx-reset"></i> Nhập Lại
+                  </button>
+                </div>
+              </form>
+
+              <!-- Category List -->
+              <div
+                class="category-list-section"
+                style="
+                  margin-top: 20px;
+                  padding-top: 20px;
+                  border-top: 1px solid #f0f0f0;
+                "
+              >
+                <h5
+                  style="font-size: 14px; font-weight: 600; margin-bottom: 10px"
+                >
+                  Danh Sách Danh Mục
+                </h5>
+                <div class="table-responsive">
+                  <table
+                    class="table table-hover"
+                    style="font-size: 14px; margin-bottom: 0"
+                  >
+                    <thead>
+                      <tr>
+                        <th style="width: 50px">STT</th>
+                        <th>Tên Danh Mục</th>
+                        <th style="width: 120px; text-align: center">
+                          Hành Động
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="categoryListContainer">
+                      <tr th:each="cat, iterStat : ${categoryList}">
+                        <td th:text="${iterStat.count}">1</td>
+                        <td>
+                          <strong th:text="${cat.name}">Tên danh mục</strong>
+                        </td>
+                        <td style="text-align: center">
+                          <button
+                            class="btn-sm btn-edit edit-cat-btn"
+                            th:data-id="${cat.id}"
+                            title="Sửa"
+                          >
+                            <i class="bx bx-edit"></i> Sửa
+                          </button>
+                          <button
+                            class="btn-sm btn-delete delete-cat-btn"
+                            th:data-id="${cat.id}"
+                            title="Xoá"
+                          >
+                            <i class="bx bx-trash"></i> Xoá
+                          </button>
+                        </td>
+                      </tr>
+                      <tr th:if="${#lists.isEmpty(categoryList)}">
+                        <td colspan="3" class="empty-state text-center py-3">
+                          Chưa có danh mục nào
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- Pagination for Categories -->
+                <nav aria-label="Category pagination" style="margin-top: 10px">
+                  <ul
+                    class="pagination justify-content-center"
+                    id="categoryPaginationContainer"
+                    style="font-size: 13px"
+                  >
+                    <!-- Category pagination will be inserted here -->
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer th:replace="admin/components/footer :: footer"></footer>
+    </div>
+
+    <!-- Bootstrap JS - CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Component JS -->
+    <script th:src="@{/js/admin/sidebar.js}"></script>
+    <script th:src="@{/js/admin/navbar.js}"></script>
+    <script th:src="@{/js/custom-alert.js}"></script>
+    <!-- Menu Management JS -->
+    <script
+      th:src="@{/js/admin/menu_management.js(v=${#dates.createNow().time})}"
+    ></script>
+  </body>
+</html>

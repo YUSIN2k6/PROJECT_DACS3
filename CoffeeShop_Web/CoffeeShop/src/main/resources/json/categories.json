@@ -1,0 +1,22 @@
+[
+  {
+    "id": "CAT001",
+    "name": "Cà Phê",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "CAT002",
+    "name": "Trà",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "CAT003",
+    "name": "Sinh Tố",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "CAT004",
+    "name": "Nước Ép",
+    "createdAt": "2026-01-01T00:00:00Z"
+  }
+]

@@ -1,0 +1,77 @@
+<!-- Sidebar Navigation -->
+<aside id="sidebar" class="sidebar" th:fragment="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <!-- Tình trạng -->
+      <li class="nav-title">TÌNH TRẠNG THỐNG KÊ</li>
+      <li class="nav-item">
+        <a
+          href="/admin/dashboardAdmin"
+          class="nav-link"
+          data-path="/admin/dashboardAdmin"
+        >
+          <i class="bx bxs-dashboard"></i>
+          <span class="nav-label">Bảng điều khiển</span>
+        </a>
+      </li>
+
+      <!-- Quản lý -->
+      <li class="nav-title">CHỨC NĂNG QUẢN LÝ</li>
+      <li class="nav-item">
+        <a
+          href="/admin/staff_management"
+          class="nav-link"
+          data-path="/admin/staff_management"
+        >
+          <i class="bx bxs-user"></i>
+          <span class="nav-label">Nhân viên</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="/admin/menu_management"
+          class="nav-link"
+          data-path="/admin/menu_management"
+        >
+          <i class="bx bxs-food-menu"></i>
+          <span class="nav-label">Thực đơn</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="/admin/history_management"
+          class="nav-link"
+          data-path="/admin/history_management"
+        >
+          <i class="bx bxs-archive"></i>
+          <span class="nav-label">Lịch sử hoá đơn</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          href="/admin/table_management"
+          class="nav-link"
+          data-path="/admin/table_management"
+        >
+          <i class="bx bxs-grid"></i>
+          <span class="nav-label">Bàn</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <script>
+    // Set active nav link based on current URL
+    document.addEventListener("DOMContentLoaded", function () {
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll(".sidebar .nav-link");
+
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("data-path") === currentPath) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
+</aside>

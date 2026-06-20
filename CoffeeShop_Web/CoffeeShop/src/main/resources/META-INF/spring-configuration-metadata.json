@@ -1,0 +1,21 @@
+{
+  "groups": [
+    {
+      "name": "firebase",
+      "type": "com.example.CoffeeShop.config.FirebaseProperties",
+      "sourceType": "com.example.CoffeeShop.config.FirebaseProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "firebase.database-url",
+      "type": "java.lang.String",
+      "description": "Firebase Realtime Database URL"
+    },
+    {
+      "name": "firebase.config-path",
+      "type": "java.lang.String",
+      "description": "Path to Firebase service account JSON file"
+    }
+  ]
+}

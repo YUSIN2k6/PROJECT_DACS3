@@ -1,0 +1,202 @@
+[
+  {
+    "id": "STAFF001",
+    "name": "Nguyễn Văn A",
+    "email": "nguyen.van.a@coffeshop.com",
+    "phone": "0901234567",
+    "position": "Quản lý",
+    "status": "active",
+    "hire_date": "2025-01-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF002",
+    "name": "Trần Thị B",
+    "email": "tran.thi.b@coffeshop.com",
+    "phone": "0902345678",
+    "position": "Thu ngân",
+    "status": "active",
+    "hire_date": "2025-02-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF003",
+    "name": "Phạm Văn C",
+    "email": "pham.van.c@coffeshop.com",
+    "phone": "0903456789",
+    "position": "Thu ngân",
+    "status": "active",
+    "hire_date": "2025-02-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF004",
+    "name": "Lê Thị D",
+    "email": "le.thi.d@coffeshop.com",
+    "phone": "0904567890",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-03-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF005",
+    "name": "Hoàng Văn E",
+    "email": "hoang.van.e@coffeshop.com",
+    "phone": "0905678901",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-03-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF006",
+    "name": "Võ Thị F",
+    "email": "vo.thi.f@coffeshop.com",
+    "phone": "0906789012",
+    "position": "Kế toán",
+    "status": "active",
+    "hire_date": "2025-04-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF007",
+    "name": "Đỗ Văn G",
+    "email": "do.van.g@coffeshop.com",
+    "phone": "0907890123",
+    "position": "Quản lý",
+    "status": "active",
+    "hire_date": "2025-04-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF008",
+    "name": "Bùi Thị H",
+    "email": "bui.thi.h@coffeshop.com",
+    "phone": "0908901234",
+    "position": "Quản lý",
+    "status": "active",
+    "hire_date": "2025-05-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF009",
+    "name": "Tô Văn I",
+    "email": "to.van.i@coffeshop.com",
+    "phone": "0909012345",
+    "position": "Thu ngân",
+    "status": "active",
+    "hire_date": "2025-05-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF010",
+    "name": "Đinh Thị J",
+    "email": "dinh.thi.j@coffeshop.com",
+    "phone": "0910123456",
+    "position": "Thu ngân",
+    "status": "active",
+    "hire_date": "2025-06-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF011",
+    "name": "Trịnh Văn K",
+    "email": "trinh.van.k@coffeshop.com",
+    "phone": "0911234567",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-06-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF012",
+    "name": "Vũ Thị L",
+    "email": "vu.thi.l@coffeshop.com",
+    "phone": "0912345678",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-07-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF013",
+    "name": "Dương Văn M",
+    "email": "duong.van.m@coffeshop.com",
+    "phone": "0913456789",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-07-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF014",
+    "name": "Từ Thị N",
+    "email": "tu.thi.n@coffeshop.com",
+    "phone": "0914567890",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-08-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF015",
+    "name": "Mạc Văn O",
+    "email": "mac.van.o@coffeshop.com",
+    "phone": "0915678901",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-08-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF016",
+    "name": "Phan Thị P",
+    "email": "phan.thi.p@coffeshop.com",
+    "phone": "0916789012",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-09-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF017",
+    "name": "Quách Văn Q",
+    "email": "quach.van.q@coffeshop.com",
+    "phone": "0917890123",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-09-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF018",
+    "name": "Rơ Thị R",
+    "email": "ro.thi.r@coffeshop.com",
+    "phone": "0918901234",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-10-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF019",
+    "name": "Sơn Văn S",
+    "email": "son.van.s@coffeshop.com",
+    "phone": "0919012345",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-10-15",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "STAFF020",
+    "name": "Tạ Thị T",
+    "email": "ta.thi.t@coffeshop.com",
+    "phone": "0920123456",
+    "position": "Phục vụ",
+    "status": "active",
+    "hire_date": "2025-11-01",
+    "createdAt": "2026-01-01T00:00:00Z"
+  }
+]

@@ -1,0 +1,1141 @@
+{
+  "categories": {
+    "CAT001": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "name": "Cà Phê"
+    },
+    "CAT002": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "name": "Trà"
+    },
+    "CAT003": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "name": "Sinh Tố"
+    },
+    "CAT004": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "name": "Nước Ép"
+    },
+    "CAT005": {
+      "createdAt": "2026-06-05T22:10:14.079410900",
+      "id": "CAT005",
+      "name": "Kem"
+    }
+  },
+  "invoices": {
+    "260502113007": {
+      "createdAt": "2026-05-02T11:30:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-02T11:30:00Z",
+      "items": [
+        {
+          "item_id": "ITEM002",
+          "item_name": "Cà Phê Sữa",
+          "quantity": 2,
+          "total": 50000,
+          "unit_price": 25000
+        },
+        {
+          "item_id": "ITEM006",
+          "item_name": "Trà Xanh Matcha",
+          "quantity": 1,
+          "total": 20000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM012",
+          "item_name": "Nước Dứa Tươi",
+          "quantity": 2,
+          "total": 60000,
+          "unit_price": 30000
+        }
+      ],
+      "notes": "Quầy bar",
+      "payment_method": "cash",
+      "staff_id": "STAFF004",
+      "status": "paid",
+      "subtotal": 130000,
+      "table_id": "TABLE007",
+      "table_number": 7,
+      "tax": 0,
+      "total_amount": 130000
+    },
+    "260502164506": {
+      "createdAt": "2026-05-02T16:45:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-02T16:45:00Z",
+      "items": [
+        {
+          "item_id": "ITEM004",
+          "item_name": "Cà Phê Lạnh",
+          "quantity": 2,
+          "total": 60000,
+          "unit_price": 30000
+        },
+        {
+          "item_id": "ITEM009",
+          "item_name": "Sinh Tố Bơ",
+          "quantity": 1,
+          "total": 35000,
+          "unit_price": 35000
+        }
+      ],
+      "notes": "Khách thân thiết",
+      "payment_method": "cash",
+      "staff_id": "STAFF003",
+      "status": "paid",
+      "subtotal": 95000,
+      "table_id": "TABLE006",
+      "table_number": 6,
+      "tax": 0,
+      "total_amount": 95000
+    },
+    "260503120005": {
+      "createdAt": "2026-05-03T12:00:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-03T12:00:00Z",
+      "items": [
+        {
+          "item_id": "ITEM001",
+          "item_name": "Cà Phê Đen",
+          "quantity": 1,
+          "total": 20000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM002",
+          "item_name": "Cà Phê Sữa",
+          "quantity": 1,
+          "total": 25000,
+          "unit_price": 25000
+        },
+        {
+          "item_id": "ITEM005",
+          "item_name": "Trà Chanh",
+          "quantity": 2,
+          "total": 50000,
+          "unit_price": 25000
+        },
+        {
+          "item_id": "ITEM008",
+          "item_name": "Sinh Tố Dâu",
+          "quantity": 1,
+          "total": 35000,
+          "unit_price": 35000
+        },
+        {
+          "item_id": "ITEM011",
+          "item_name": "Nước Cam Tươi",
+          "quantity": 1,
+          "total": 30000,
+          "unit_price": 30000
+        },
+        {
+          "item_id": "ITEM013",
+          "item_name": "Nước Táo Tươi",
+          "quantity": 1,
+          "total": 30000,
+          "unit_price": 30000
+        }
+      ],
+      "notes": "Bàn ăn trưa",
+      "payment_method": "card",
+      "staff_id": "STAFF002",
+      "status": "paid",
+      "subtotal": 200000,
+      "table_id": "TABLE004",
+      "table_number": 4,
+      "tax": 0,
+      "total_amount": 200000
+    },
+    "260503182004": {
+      "createdAt": "2026-05-03T18:20:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-03T18:20:00Z",
+      "items": [
+        {
+          "item_id": "ITEM004",
+          "item_name": "Cà Phê Bạc Xỉu",
+          "quantity": 1,
+          "total": 30000,
+          "unit_price": 30000
+        },
+        {
+          "item_id": "ITEM006",
+          "item_name": "Trà Xanh Matcha",
+          "quantity": 2,
+          "total": 40000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM009",
+          "item_name": "Sinh Tố Bơ",
+          "quantity": 1,
+          "total": 35000,
+          "unit_price": 35000
+        },
+        {
+          "item_id": "ITEM012",
+          "item_name": "Nước Dứa Tươi",
+          "quantity": 2,
+          "total": 60000,
+          "unit_price": 30000
+        }
+      ],
+      "notes": "Gia đình",
+      "payment_method": "cash",
+      "staff_id": "STAFF004",
+      "status": "paid",
+      "subtotal": 165000,
+      "table_id": "TABLE002",
+      "table_number": 2,
+      "tax": 0,
+      "total_amount": 165000
+    },
+    "260504134503": {
+      "createdAt": "2026-05-04T13:45:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-04T13:45:00Z",
+      "items": [
+        {
+          "item_id": "ITEM003",
+          "item_name": "Americano",
+          "quantity": 4,
+          "total": 100000,
+          "unit_price": 25000
+        }
+      ],
+      "notes": "Khách hủy đơn",
+      "payment_method": "cash",
+      "staff_id": "STAFF003",
+      "status": "cancelled",
+      "subtotal": 100000,
+      "table_id": "TABLE005",
+      "table_number": 5,
+      "tax": 0,
+      "total_amount": 100000
+    },
+    "260504143001": {
+      "createdAt": "2026-05-04T14:30:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-04T14:30:00Z",
+      "items": [
+        {
+          "item_id": "ITEM001",
+          "item_name": "Cà Phê Đen",
+          "quantity": 2,
+          "total": 40000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM005",
+          "item_name": "Trà Chanh",
+          "quantity": 1,
+          "total": 25000,
+          "unit_price": 25000
+        }
+      ],
+      "notes": "Quán khách",
+      "payment_method": "cash",
+      "staff_id": "STAFF002",
+      "status": "paid",
+      "subtotal": 65000,
+      "table_id": "TABLE001",
+      "table_number": 1,
+      "tax": 0,
+      "total_amount": 65000
+    },
+    "260504151502": {
+      "createdAt": "2026-05-04T15:15:00Z",
+      "discount": 20000,
+      "invoice_date": "2026-05-04T15:15:00Z",
+      "items": [
+        {
+          "item_id": "ITEM002",
+          "item_name": "Cà Phê Sữa",
+          "quantity": 3,
+          "total": 75000,
+          "unit_price": 25000
+        },
+        {
+          "item_id": "ITEM008",
+          "item_name": "Sinh Tố Dâu",
+          "quantity": 2,
+          "total": 70000,
+          "unit_price": 35000
+        },
+        {
+          "item_id": "ITEM011",
+          "item_name": "Nước Cam Tươi",
+          "quantity": 1,
+          "total": 30000,
+          "unit_price": 30000
+        }
+      ],
+      "notes": "Nhóm bạn - khuyến mãi 20k",
+      "payment_method": "card",
+      "staff_id": "STAFF002",
+      "status": "paid",
+      "subtotal": 175000,
+      "table_id": "TABLE003",
+      "table_number": 3,
+      "tax": 0,
+      "total_amount": 155000
+    },
+    "260505093008": {
+      "createdAt": "2026-05-05T09:30:00Z",
+      "discount": 10000,
+      "invoice_date": "2026-05-05T09:30:00Z",
+      "items": [
+        {
+          "item_id": "ITEM001",
+          "item_name": "Cà Phê Đen",
+          "quantity": 3,
+          "total": 60000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM003",
+          "item_name": "Americano",
+          "quantity": 2,
+          "total": 50000,
+          "unit_price": 25000
+        }
+      ],
+      "notes": "Khuyến mãi buổi sáng",
+      "payment_method": "card",
+      "staff_id": "STAFF002",
+      "status": "paid",
+      "subtotal": 110000,
+      "table_id": "TABLE008",
+      "table_number": 8,
+      "tax": 0,
+      "total_amount": 100000
+    },
+    "260505145509": {
+      "createdAt": "2026-05-05T14:55:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-05T14:55:00Z",
+      "items": [
+        {
+          "item_id": "ITEM007",
+          "item_name": "Trà Oolong",
+          "quantity": 1,
+          "total": 20000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM010",
+          "item_name": "Sinh Tố Xoài",
+          "quantity": 2,
+          "total": 70000,
+          "unit_price": 35000
+        },
+        {
+          "item_id": "ITEM011",
+          "item_name": "Nước Cam Tươi",
+          "quantity": 1,
+          "total": 30000,
+          "unit_price": 30000
+        }
+      ],
+      "notes": "Khách nữ - vui vẻ",
+      "payment_method": "cash",
+      "staff_id": "STAFF003",
+      "status": "paid",
+      "subtotal": 120000,
+      "table_id": "TABLE009",
+      "table_number": 9,
+      "tax": 0,
+      "total_amount": 120000
+    },
+    "260506101010": {
+      "createdAt": "2026-05-06T10:10:00Z",
+      "discount": 0,
+      "invoice_date": "2026-05-06T10:10:00Z",
+      "items": [
+        {
+          "item_id": "ITEM004",
+          "item_name": "Cà Phê Bạc Xỉu",
+          "quantity": 2,
+          "total": 60000,
+          "unit_price": 30000
+        },
+        {
+          "item_id": "ITEM009",
+          "item_name": "Sinh Tố Bơ",
+          "quantity": 1,
+          "total": 35000,
+          "unit_price": 35000
+        }
+      ],
+      "notes": "Nhân viên văn phòng",
+      "payment_method": "card",
+      "staff_id": "STAFF005",
+      "status": "paid",
+      "subtotal": 95000,
+      "table_id": "TABLE010",
+      "table_number": 10,
+      "tax": 0,
+      "total_amount": 95000
+    },
+    "260506173511": {
+      "createdAt": "2026-05-06T17:35:00Z",
+      "discount": 15000,
+      "invoice_date": "2026-05-06T17:35:00Z",
+      "items": [
+        {
+          "item_id": "ITEM005",
+          "item_name": "Trà Chanh",
+          "quantity": 3,
+          "total": 75000,
+          "unit_price": 25000
+        },
+        {
+          "item_id": "ITEM008",
+          "item_name": "Sinh Tố Dâu",
+          "quantity": 2,
+          "total": 70000,
+          "unit_price": 35000
+        },
+        {
+          "item_id": "ITEM013",
+          "item_name": "Nước Táo Tươi",
+          "quantity": 1,
+          "total": 30000,
+          "unit_price": 30000
+        }
+      ],
+      "notes": "Nhóm bạn - giảm giá 15k",
+      "payment_method": "cash",
+      "staff_id": "STAFF002",
+      "status": "paid",
+      "subtotal": 175000,
+      "table_id": "TABLE002",
+      "table_number": 2,
+      "tax": 0,
+      "total_amount": 160000
+    },
+    "260607203525": {
+      "createdAt": "2026-06-07T20:35:25.938582600",
+      "discount": 0,
+      "id": "260607203525",
+      "invoice_date": "2026-06-07 20:35:25",
+      "items": [
+        {
+          "item_id": "ITEM007",
+          "item_name": "Trà Đào",
+          "quantity": 1,
+          "total": 20000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM008",
+          "item_name": "Sinh Tố Dâu",
+          "quantity": 3,
+          "total": 105000,
+          "unit_price": 35000
+        },
+        {
+          "item_id": "ITEM011",
+          "item_name": "Nước Cam Tươi",
+          "quantity": 1,
+          "total": 30000,
+          "unit_price": 30000
+        },
+        {
+          "item_id": "ITEM010",
+          "item_name": "Sinh Tố Xoài",
+          "quantity": 1,
+          "total": 35000,
+          "unit_price": 35000
+        }
+      ],
+      "notes": "Đơn mang về",
+      "payment_method": "Tiền mặt",
+      "status": "paid",
+      "subtotal": 190000,
+      "table_id": "TAKEAWAY",
+      "table_number": 0,
+      "tax": 0,
+      "total_amount": 190000
+    },
+    "260609162807": {
+      "createdAt": "2026-06-09T16:28:07.496303700",
+      "discount": 0,
+      "id": "260609162807",
+      "invoice_date": "2026-06-09 16:28:07",
+      "items": [
+        {
+          "item_id": "ITEM001",
+          "item_name": "Cà Phê Đen",
+          "quantity": 5,
+          "total": 100000,
+          "unit_price": 20000
+        },
+        {
+          "item_id": "ITEM002",
+          "item_name": "Cà Phê Sữa",
+          "quantity": 4,
+          "total": 100000,
+          "unit_price": 25000
+        },
+        {
+          "item_id": "ITEM003",
+          "item_name": "Americano",
+          "quantity": 4,
+          "total": 100000,
+          "unit_price": 25000
+        },
+        {
+          "item_id": "ITEM006",
+          "item_name": "Trà Xanh Matcha",
+          "quantity": 2,
+          "total": 40000,
+          "unit_price": 20000
+        }
+      ],
+      "notes": "Đơn mang về",
+      "payment_method": "Tiền mặt",
+      "status": "paid",
+      "subtotal": 340000,
+      "table_id": "TAKEAWAY",
+      "table_number": 0,
+      "tax": 0,
+      "total_amount": 340000
+    }
+  },
+  "menu_items": {
+    "ITEM001": {
+      "category_id": "CAT001",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/coffee-den.jpg",
+      "name": "Cà Phê Đen",
+      "price": 20000,
+      "status": "available"
+    },
+    "ITEM002": {
+      "category_id": "CAT001",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/coffee-sua.jpg",
+      "name": "Cà Phê Sữa",
+      "price": 25000,
+      "status": "available"
+    },
+    "ITEM003": {
+      "category_id": "CAT001",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/americano.jpg",
+      "name": "Americano",
+      "price": 25000,
+      "status": "available"
+    },
+    "ITEM004": {
+      "category_id": "CAT001",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/bac-xiu.jpg",
+      "name": "Cà Phê Bạc Xỉu",
+      "price": 30000,
+      "status": "available"
+    },
+    "ITEM005": {
+      "category_id": "CAT002",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/tra-chanh.jpg",
+      "name": "Trà Chanh",
+      "price": 25000,
+      "status": "available"
+    },
+    "ITEM006": {
+      "category_id": "CAT002",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/tra-xanh-matcha.jpg",
+      "name": "Trà Xanh Matcha",
+      "price": 20000,
+      "status": "available"
+    },
+    "ITEM007": {
+      "category_id": "CAT002",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/tra-dao.jpg",
+      "name": "Trà Đào",
+      "price": 20000,
+      "status": "available"
+    },
+    "ITEM008": {
+      "category_id": "CAT003",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/sinh-to-dau.jpg",
+      "name": "Sinh Tố Dâu",
+      "price": 35000,
+      "status": "available"
+    },
+    "ITEM009": {
+      "category_id": "CAT003",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/sinh-to-bo.jpg",
+      "name": "Sinh Tố Bơ",
+      "price": 35000,
+      "status": "available"
+    },
+    "ITEM010": {
+      "category_id": "CAT003",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/sinh-to-xoai.jpg",
+      "name": "Sinh Tố Xoài",
+      "price": 35000,
+      "status": "available"
+    },
+    "ITEM011": {
+      "category_id": "CAT004",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/nuoc-cam.jpg",
+      "name": "Nước Cam Tươi",
+      "price": 30000,
+      "status": "available"
+    },
+    "ITEM012": {
+      "category_id": "CAT004",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/nuoc-dua.jpg",
+      "name": "Nước Dứa Tươi",
+      "price": 30000,
+      "status": "available"
+    },
+    "ITEM013": {
+      "category_id": "CAT004",
+      "createdAt": "2026-01-01T00:00:00Z",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/nuoc-tao.jpg",
+      "name": "Nước Táo Tươi",
+      "price": 30000,
+      "status": "available"
+    },
+    "ITEM014": {
+      "category_id": "CAT005",
+      "createdAt": "2026-06-05T22:48:26.471574900",
+      "id": "ITEM014",
+      "image_url": "https://gppwenxcyymmawptxscq.supabase.co/storage/v1/object/public/coffee-shop-images/products/menu-b26c575d-d083-4489-bc89-98b2d3e5f479.jpg",
+      "name": "Kem dâu",
+      "price": 10000,
+      "status": "available"
+    }
+  },
+  "staff": {
+    "STAFF001": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "nguyen.van.a@coffeshop.com",
+      "hire_date": "2025-01-15",
+      "name": "Nguyễn Văn A",
+      "phone": "0901234567",
+      "position": "Quản lý",
+      "status": "active"
+    },
+    "STAFF002": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "tran.thi.b@coffeshop.com",
+      "hire_date": "2025-02-01",
+      "name": "Trần Thị B",
+      "phone": "0902345678",
+      "position": "Thu ngân",
+      "status": "active"
+    },
+    "STAFF003": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "pham.van.c@coffeshop.com",
+      "hire_date": "2025-02-15",
+      "name": "Phạm Văn C",
+      "phone": "0903456789",
+      "position": "Thu ngân",
+      "status": "active"
+    },
+    "STAFF004": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "le.thi.d@coffeshop.com",
+      "hire_date": "2025-03-01",
+      "name": "Lê Thị D",
+      "phone": "0904567890",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF005": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "hoang.van.e@coffeshop.com",
+      "hire_date": "2025-03-15",
+      "name": "Hoàng Văn E",
+      "phone": "0905678901",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF006": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "vo.thi.f@coffeshop.com",
+      "hire_date": "2025-04-01",
+      "name": "Võ Thị F",
+      "phone": "0906789012",
+      "position": "Kế toán",
+      "status": "active"
+    },
+    "STAFF007": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "do.van.g@coffeshop.com",
+      "hire_date": "2025-04-15",
+      "name": "Đỗ Văn G",
+      "phone": "0907890123",
+      "position": "Quản lý",
+      "status": "active"
+    },
+    "STAFF008": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "bui.thi.h@coffeshop.com",
+      "hire_date": "2025-05-01",
+      "name": "Bùi Thị H",
+      "phone": "0908901234",
+      "position": "Quản lý",
+      "status": "active"
+    },
+    "STAFF009": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "to.van.i@coffeshop.com",
+      "hire_date": "2025-05-15",
+      "name": "Tô Văn I",
+      "phone": "0909012345",
+      "position": "Thu ngân",
+      "status": "active"
+    },
+    "STAFF010": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "dinh.thi.j@coffeshop.com",
+      "hire_date": "2025-06-01",
+      "name": "Đinh Thị J",
+      "phone": "0910123456",
+      "position": "Thu ngân",
+      "status": "active"
+    },
+    "STAFF011": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "trinh.van.k@coffeshop.com",
+      "hire_date": "2025-06-15",
+      "name": "Trịnh Văn K",
+      "phone": "0911234567",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF012": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "vu.thi.l@coffeshop.com",
+      "hire_date": "2025-07-01",
+      "name": "Vũ Thị L",
+      "phone": "0912345678",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF013": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "duong.van.m@coffeshop.com",
+      "hire_date": "2025-07-15",
+      "name": "Dương Văn M",
+      "phone": "0913456789",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF014": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "tu.thi.n@coffeshop.com",
+      "hire_date": "2025-08-01",
+      "name": "Từ Thị N",
+      "phone": "0914567890",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF015": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "mac.van.o@coffeshop.com",
+      "hire_date": "2025-08-15",
+      "name": "Mạc Văn O",
+      "phone": "0915678901",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF016": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "phan.thi.p@coffeshop.com",
+      "hire_date": "2025-09-01",
+      "name": "Phan Thị P",
+      "phone": "0916789012",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF017": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "quach.van.q@coffeshop.com",
+      "hire_date": "2025-09-15",
+      "name": "Quách Văn Q",
+      "phone": "0917890123",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF018": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "ro.thi.r@coffeshop.com",
+      "hire_date": "2025-10-01",
+      "name": "Rơ Thị R",
+      "phone": "0918901234",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF019": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "son.van.s@coffeshop.com",
+      "hire_date": "2025-10-15",
+      "name": "Sơn Văn S",
+      "phone": "0919012345",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF020": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "ta.thi.t@coffeshop.com",
+      "hire_date": "2025-11-01",
+      "name": "Tạ Thị T",
+      "phone": "0920123456",
+      "position": "Phục vụ",
+      "status": "active"
+    },
+    "STAFF021": {
+      "createdAt": "2026-06-04T22:24:26.866511500",
+      "email": "tuanbmt3355@gmail.com",
+      "hireDate": "2026-06-04",
+      "id": "STAFF021",
+      "name": "Nguyễn Hiển Tuấn",
+      "phone": "0905901165",
+      "position": "Quản Trị Viên",
+      "status": "inactive"
+    },
+    "STAFF022": {
+      "createdAt": "2026-06-05T21:05:48.982480900",
+      "email": "tuannh.24itb@vku.udn.vn",
+      "hireDate": "2026-06-05",
+      "id": "STAFF022",
+      "name": "Lâm Đình Khoa",
+      "phone": "0933222554",
+      "position": "Thu Ngân",
+      "status": "inactive"
+    }
+  },
+  "tables": {
+    "TABLE001": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "current_order": {
+        "items": [
+          {
+            "item_id": "ITEM003",
+            "item_name": "Americano",
+            "price": 25000,
+            "quantity": 2,
+            "sentToKitchen": true,
+            "served": false,
+            "timestamp": "",
+            "total": 50000
+          },
+          {
+            "item_id": "ITEM004",
+            "item_name": "Cà Phê Bạc Xỉu",
+            "price": 30000,
+            "quantity": 3,
+            "sentToKitchen": true,
+            "served": false,
+            "timestamp": "",
+            "total": 90000
+          },
+          {
+            "item_id": "ITEM002",
+            "item_name": "Cà Phê Sữa",
+            "price": 25000,
+            "quantity": 2,
+            "sentToKitchen": true,
+            "served": false,
+            "timestamp": "",
+            "total": 50000
+          }
+        ],
+        "notes": ""
+      },
+      "status": "preparing",
+      "table_number": 1
+    },
+    "TABLE002": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 2
+    },
+    "TABLE003": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 3
+    },
+    "TABLE004": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 4
+    },
+    "TABLE005": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 5
+    },
+    "TABLE006": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 6
+    },
+    "TABLE007": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 7
+    },
+    "TABLE008": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 8
+    },
+    "TABLE009": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 9
+    },
+    "TABLE010": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "status": "available",
+      "table_number": 10
+    },
+    "TABLE013": {
+      "createdAt": "2026-06-06T20:44:32.805453200",
+      "id": "TABLE013",
+      "status": "available",
+      "table_number": 13
+    }
+  },
+  "users": {
+    "USER001": {
+      "createdAt": "2026-01-01T00:00:00Z",
+      "email": "admin@coffeshop.com",
+      "last_login": "2026-06-06T20:32:50.492191700",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "admin",
+      "staff_id": "STAFF001",
+      "status": "active",
+      "username": "admin"
+    },
+    "USER002": {
+      "createdAt": "2026-02-01T00:00:00Z",
+      "email": "tran.thi.b@coffeshop.com",
+      "last_login": "2026-06-12T22:32:23.770170700",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "cashier",
+      "staff_id": "STAFF002",
+      "status": "active",
+      "username": "cashier1"
+    },
+    "USER003": {
+      "createdAt": "2026-02-15T00:00:00Z",
+      "email": "pham.van.c@coffeshop.com",
+      "last_login": "2026-05-04T16:00:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "cashier",
+      "staff_id": "STAFF003",
+      "status": "active",
+      "username": "cashier2"
+    },
+    "USER004": {
+      "createdAt": "2026-03-01T00:00:00Z",
+      "email": "le.thi.d@coffeshop.com",
+      "last_login": "2026-05-04T17:00:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF004",
+      "status": "active",
+      "username": "waiter1"
+    },
+    "USER005": {
+      "createdAt": "2026-03-15T00:00:00Z",
+      "email": "hoang.van.e@coffeshop.com",
+      "last_login": "2026-05-04T17:30:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF005",
+      "status": "active",
+      "username": "waiter2"
+    },
+    "USER006": {
+      "createdAt": "2026-04-15T00:00:00Z",
+      "email": "do.van.g@coffeshop.com",
+      "last_login": "2026-05-04T08:00:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "admin",
+      "staff_id": "STAFF007",
+      "status": "active",
+      "username": "manager1"
+    },
+    "USER007": {
+      "createdAt": "2026-05-01T00:00:00Z",
+      "email": "bui.thi.h@coffeshop.com",
+      "last_login": "2026-05-04T08:30:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "admin",
+      "staff_id": "STAFF008",
+      "status": "active",
+      "username": "manager2"
+    },
+    "USER008": {
+      "createdAt": "2026-05-15T00:00:00Z",
+      "email": "to.van.i@coffeshop.com",
+      "last_login": "2026-05-04T14:30:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "cashier",
+      "staff_id": "STAFF009",
+      "status": "active",
+      "username": "cashier3"
+    },
+    "USER009": {
+      "createdAt": "2026-06-01T00:00:00Z",
+      "email": "dinh.thi.j@coffeshop.com",
+      "last_login": "2026-05-04T15:00:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "cashier",
+      "staff_id": "STAFF010",
+      "status": "active",
+      "username": "cashier4"
+    },
+    "USER010": {
+      "createdAt": "2026-06-15T00:00:00Z",
+      "email": "trinh.van.k@coffeshop.com",
+      "last_login": "2026-05-04T17:45:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF010",
+      "status": "active",
+      "username": "staff1"
+    },
+    "USER011": {
+      "createdAt": "2026-07-01T00:00:00Z",
+      "email": "vu.thi.l@coffeshop.com",
+      "last_login": "2026-05-04T18:00:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF011",
+      "status": "active",
+      "username": "staff2"
+    },
+    "USER012": {
+      "createdAt": "2026-07-15T00:00:00Z",
+      "email": "duong.van.m@coffeshop.com",
+      "last_login": "2026-05-04T18:15:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF012",
+      "status": "active",
+      "username": "staff3"
+    },
+    "USER013": {
+      "createdAt": "2026-08-01T00:00:00Z",
+      "email": "tu.thi.n@coffeshop.com",
+      "last_login": "2026-05-04T18:30:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF013",
+      "status": "active",
+      "username": "staff4"
+    },
+    "USER014": {
+      "createdAt": "2026-08-15T00:00:00Z",
+      "email": "mac.van.o@coffeshop.com",
+      "last_login": "2026-05-04T18:45:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF014",
+      "status": "active",
+      "username": "staff5"
+    },
+    "USER015": {
+      "createdAt": "2026-09-01T00:00:00Z",
+      "email": "phan.thi.p@coffeshop.com",
+      "last_login": "2026-05-04T19:00:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF015",
+      "status": "active",
+      "username": "staff6"
+    },
+    "USER016": {
+      "createdAt": "2026-09-15T00:00:00Z",
+      "email": "quach.van.q@coffeshop.com",
+      "last_login": "2026-05-04T19:15:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF016",
+      "status": "active",
+      "username": "staff7"
+    },
+    "USER017": {
+      "createdAt": "2026-10-01T00:00:00Z",
+      "email": "ro.thi.r@coffeshop.com",
+      "last_login": "2026-05-04T19:30:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF017",
+      "status": "active",
+      "username": "staff8"
+    },
+    "USER018": {
+      "createdAt": "2026-10-15T00:00:00Z",
+      "email": "son.van.s@coffeshop.com",
+      "last_login": "2026-05-04T19:45:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF018",
+      "status": "active",
+      "username": "staff9"
+    },
+    "USER019": {
+      "createdAt": "2026-11-01T00:00:00Z",
+      "email": "ta.thi.t@coffeshop.com",
+      "last_login": "2026-05-04T20:00:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF019",
+      "status": "active",
+      "username": "staff10"
+    },
+    "USER020": {
+      "createdAt": "2026-11-15T00:00:00Z",
+      "email": "nguyen.thi.u@coffeshop.com",
+      "last_login": "2026-05-04T20:15:00Z",
+      "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+      "role": "staff",
+      "staff_id": "STAFF020",
+      "status": "active",
+      "username": "staff11"
+    },
+    "USER021": {
+      "createdAt": "2026-06-04T22:24:27.058230900",
+      "email": "tuanbmt3355@gmail.com",
+      "id": "USER021",
+      "password_hash": "$2a$10$x8ELo2IqsMYGjuD4qfW9fesmPXtJpHBsvmHgS5hbd2J1gIuvA3Bxe",
+      "role": "admin",
+      "staff_id": "STAFF021",
+      "status": "active",
+      "username": "qtv"
+    },
+    "USER022": {
+      "createdAt": "2026-06-05T21:05:49.182002400",
+      "email": "tuannh.24itb@vku.udn.vn",
+      "id": "USER022",
+      "last_login": "2026-06-05T21:08:23.825374",
+      "password_hash": "$2a$10$5boK8fOypj/W28WW2LA/A.tqU74XBMsgLQZ6g7ttrd5Bv3vTnoJhG",
+      "role": "cashier",
+      "staff_id": "STAFF022",
+      "status": "active",
+      "username": "ldk"
+    }
+  }
+}

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thu Ngân - Sơ Đồ Bàn POS</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+    />
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/dashboardCashier.css}" />
+  </head>
+  <body>
+    <div th:replace="~{cashier/components/sidebar :: sidebar}"></div>
+
+    <nav th:replace="~{cashier/components/navigator :: navbar}"></nav>
+
+    <div class="main-container">
+      <main class="main-content pos-layout">
+        <div class="table-section">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="fw-bold m-0">
+              <i class="bx bx-grid-alt text-primary"></i> SƠ ĐỒ BÀN
+            </h4>
+            <button
+              class="btn btn-warning fw-bold shadow-sm"
+              onclick="handleTakeawayOrder()"
+            >
+              <i class="bx bx-shopping-bag"></i> TẠO ĐƠN MANG VỀ
+            </button>
+          </div>
+
+          <div class="filter-tabs mb-4">
+            <button class="filter-btn active" data-filter="all">Tất cả</button>
+            <button class="filter-btn text-secondary" data-filter="available">
+              Trống
+            </button>
+            <button class="filter-btn text-primary" data-filter="preparing">
+              Đang chuẩn bị
+            </button>
+            <button class="filter-btn text-success" data-filter="occupied">
+              Có khách
+            </button>
+            <button class="filter-btn text-warning" data-filter="served">
+              Đã phục vụ
+            </button>
+            <button class="filter-btn text-danger" data-filter="pending">
+              Chờ tính tiền
+            </button>
+          </div>
+
+          <div class="tables-vertical-grid" id="tablesGrid"></div>
+        </div>
+
+        <div class="order-sidebar shadow-sm mb-5">
+          <div class="sidebar-header">
+            <h4 class="fw-bold m-0 text-center">
+              CHI TIẾT BÀN <span class="num-table text-primary">-</span>
+            </h4>
+            <div class="text-center mt-1">
+              <span id="sidebarTableStatus" class="badge bg-secondary"
+                >Chưa chọn bàn</span
+              >
+            </div>
+          </div>
+
+          <div class="sidebar-content">
+            <div id="sidebarEmptyMessage" class="empty-state">
+              <i class="bx bx-coffee-togo"></i>
+              <p>
+                Vui lòng chọn một bàn bên sơ đồ để xem chi tiết đơn hàng hoặc
+                pha chế.
+              </p>
+            </div>
+
+            <div id="preparingTableContainer" style="display: none">
+              <h6 class="fw-bold text-muted mb-3">
+                <i class="bx bx-list-ul"></i> DANH SÁCH MÓN:
+              </h6>
+              <div class="order-items-list" id="preparingItemsList"></div>
+
+              <div class="note-box mt-4">
+                <strong class="text-warning-dark"
+                  ><i class="bx bx-notepad"></i> Ghi chú từ phục vụ:</strong
+                >
+                <div id="preparingNotes" class="note-text mt-1 text-secondary">
+                  Không có ghi chú
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-footer">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-bold text-muted fs-6">TỔNG CỘNG:</span>
+              <span id="sidebarTotalAmount" class="fw-bold fs-4 text-danger"
+                >0 đ</span
+              >
+            </div>
+            <div class="d-flex gap-2 mb-2" id="actionButtonsContainer">
+              <button
+                id="btnSwitchTable"
+                class="btn btn-outline-secondary w-50 fw-bold"
+                onclick="openSwitchTableModal()"
+              >
+                <i class="bx bx-transfer"></i> Đổi bàn
+              </button>
+              <button
+                id="btnMergeTable"
+                class="btn btn-outline-info flex-fill fw-bold"
+                onclick="openMergeTableModal()"
+              >
+                <i class="bx bx-link"></i> Gộp
+              </button>
+              <button
+                id="btnCancelTable"
+                class="btn btn-outline-danger w-50 fw-bold"
+                onclick="cancelTable()"
+              >
+                <i class="bx bx-trash"></i> Hủy khách
+              </button>
+            </div>
+            <button
+              id="btnCheckoutSidebar"
+              class="btn btn-success w-100 py-3 fw-bold fs-5 shadow-sm"
+              onclick="handlePaymentFromSidebar()"
+            >
+              <i class="bx bx-credit-card-front"></i> THANH TOÁN
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/cashier/sidebar.js}"></script>
+    <script th:src="@{/js/cashier/navbar.js}"></script>
+    <script th:inline="javascript">
+      let tableList = /*[[${javaTables}]]*/ [];
+    </script>
+    <script th:src="@{/js/custom-alert.js}"></script>
+    <script th:src="@{/js/cashier/dashboardCashier.js}"></script>
+
+    <div
+      class="modal fade"
+      id="switchTableModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title fw-bold">
+              <i class="bx bx-transfer text-primary"></i> Đổi Bàn
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">
+              Vui lòng chọn một bàn đang trống để chuyển khách sang:
+            </p>
+            <select
+              id="targetTableSelect"
+              class="form-select form-select-lg fw-bold border-2 border-primary text-primary"
+            ></select>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary fw-bold"
+              data-bs-dismiss="modal"
+            >
+              Hủy
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary fw-bold"
+              onclick="confirmSwitchTable()"
+            >
+              Xác nhận Đổi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="mergeTableModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title fw-bold">
+              <i class="bx bx-link text-info"></i> Gộp Bàn
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">
+              Vui lòng chọn bàn <strong>đang có khách</strong> để gộp chung với
+              bàn này:
+            </p>
+            <select
+              id="mergeTargetTableSelect"
+              class="form-select form-select-lg fw-bold border-2 border-info text-info"
+            ></select>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary fw-bold"
+              data-bs-dismiss="modal"
+            >
+              Hủy
+            </button>
+            <button
+              type="button"
+              class="btn btn-info fw-bold text-white"
+              onclick="confirmMergeTable()"
+            >
+              Xác nhận Gộp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

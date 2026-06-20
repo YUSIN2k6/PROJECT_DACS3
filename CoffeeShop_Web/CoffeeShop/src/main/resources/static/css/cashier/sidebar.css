@@ -1,0 +1,220 @@
+/* ===== SIDEBAR STYLES - Datta Able Style ===== */
+
+/* Sidebar Container */
+.sidebar {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 260px !important;
+  height: 100vh !important;
+  background: #a0826d !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  z-index: 98 !important;
+  transition: var(--transition) !important;
+  padding-top: 70px !important;
+  display: block !important;
+  transform: translateX(0) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Scrollbar Style */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Sidebar Collapsed State */
+.sidebar.collapsed {
+  width: 70px !important;
+}
+
+/* Navigation Container */
+.sidebar-nav {
+  padding: 20px 0;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Section Title */
+.nav-title {
+  padding: 15px 20px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.sidebar.collapsed .nav-title {
+  display: none;
+}
+
+/* Navigation Item */
+.nav-item {
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation Link */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+  margin: 0 10px;
+  border-radius: 8px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.nav-link.active {
+  background: rgba(212, 165, 116, 0.25);
+  color: #fff;
+  font-weight: 600;
+  border-left: 3px solid #d4a574;
+  padding-left: 17px;
+}
+
+/* Nav Link Icon */
+.nav-link i {
+  font-size: 20px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Nav Link Label */
+.nav-label {
+  white-space: nowrap;
+  flex: 1;
+}
+
+.sidebar.collapsed .nav-label {
+  display: none;
+}
+
+/* DESKTOP - Sidebar luôn hiển thị (min-width 992px) */
+@media (min-width: 992px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: #a0826d;
+    display: block !important;
+    transform: translateX(0) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 98;
+  }
+
+  .sidebar.collapsed {
+    width: var(--sidebar-width-collapsed);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+}
+
+/* TABLET (768px - 991px) - Sidebar ẩn mặc định, toggle với active */
+@media (min-width: 768px) and (max-width: 991px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: #a0826d;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    transition: var(--transition);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    width: var(--sidebar-width);
+  }
+
+  .nav-title {
+    display: block;
+  }
+
+  .nav-label {
+    display: block;
+  }
+}
+
+/* MOBILE (<768px) - Sidebar ẩn, toggle với active */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: #a0826d;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    transition: var(--transition);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    width: var(--sidebar-width);
+  }
+
+  .nav-title {
+    display: block;
+  }
+
+  .nav-label {
+    display: block;
+  }
+}
+
+/* Dark Mode Support */
+body.dark .sidebar {
+  background: #2a2a2a;
+  border-right-color: rgba(255, 255, 255, 0.1);
+}

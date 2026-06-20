@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cashier inventory CoffeeShop</title>
+
+    <!-- Bootstrap CSS - CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Boxicons CSS - CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+    />
+
+    <!-- Global CSS - Variables & Reset -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+    <!-- Component CSS -->
+    <link rel="stylesheet" th:href="@{/css/cashier/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/cashier/inventory.css}" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div th:replace="cashier/components/sidebar :: sidebar"></div>
+
+    <!-- Navbar -->
+    <nav th:replace="cashier/components/navigator :: navbar"></nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content sẽ được thêm vào đây -->
+        <div class="inventory-content">
+          <!-- Danh sách sản phẩm -->
+          <div class="row">
+            <div class="col-8">
+              <div class="card" style="padding: 20px">
+                <h4 class="mb-4 text-center">Danh sách thực đơn</h4>
+
+                <!-- Search and Filter -->
+                <div class="row mb-4">
+                  <div class="col-8">
+                    <input
+                      type="text"
+                      id="searchInput"
+                      class="form-control"
+                      placeholder="Tìm kiếm tên nước..."
+                    />
+                  </div>
+                  <div class="col-4">
+                    <select id="filterStatus" class="form-select">
+                      <option value="all">Tất cả</option>
+                      <option value="available">Còn hàng</option>
+                      <option value="unavailable">Hết hàng</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th style="width: 50px; text-align: center">STT</th>
+                        <th>Tên Nước</th>
+                        <th>Danh Mục</th>
+                        <th style="width: 80px">Giá</th>
+                        <th style="width: 120px; text-align: center">
+                          Trạng Thái
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody">
+                      <tr th:each="item, iterStat : ${menuList}">
+                        <td
+                          style="text-align: center"
+                          th:text="${startEntry + iterStat.index}"
+                        >
+                          1
+                        </td>
+                        <td th:text="${item.name}">Tên Nước</td>
+                        <td>
+                          <span
+                            th:each="cat : ${categories}"
+                            th:if="${cat.id == item.categoryId}"
+                            th:text="${cat.name}"
+                          ></span>
+                        </td>
+                        <td
+                          style="text-align: right"
+                          th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"
+                        ></td>
+                        <td style="text-align: center">
+                          <span
+                            th:class="${item.status == 'available'} ? 'status-badge status-available' : 'status-badge status-unavailable'"
+                            th:text="${item.status == 'available'} ? 'Còn hàng' : 'Hết hàng'"
+                          >
+                          </span>
+                        </td>
+                      </tr>
+                      <tr th:if="${#lists.isEmpty(menuList)}" id="noDataRow">
+                        <td colspan="5" class="text-center py-4 text-muted">
+                          Chưa có sản phẩm nào
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-3"
+                >
+                  <div class="text-muted">
+                    Hiển thị từ <span th:text="${startEntry}">0</span> đến
+                    <span th:text="${endEntry}">0</span> trong tổng số
+                    <span th:text="${totalEntries}">0</span> món
+                  </div>
+                  <!-- Pagination -->
+                  <nav aria-label="Page navigation" th:if="${totalPages > 1}">
+                    <ul class="pagination mb-0">
+                      <li
+                        class="page-item"
+                        th:classappend="${currentPage == 1} ? 'disabled'"
+                      >
+                        <a
+                          class="page-link"
+                          th:href="@{/cashier/inventory(page=${currentPage - 1}, size=${pageSize})}"
+                          >Trước</a
+                        >
+                      </li>
+                      <li
+                        class="page-item"
+                        th:each="pageNumber : ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${pageNumber == currentPage} ? 'active'"
+                      >
+                        <a
+                          class="page-link"
+                          th:href="@{/cashier/inventory(page=${pageNumber}, size=${pageSize})}"
+                          th:text="${pageNumber}"
+                          >1</a
+                        >
+                      </li>
+                      <li
+                        class="page-item"
+                        th:classappend="${currentPage == totalPages} ? 'disabled'"
+                      >
+                        <a
+                          class="page-link"
+                          th:href="@{/cashier/inventory(page=${currentPage + 1}, size=${pageSize})}"
+                          >Tiếp</a
+                        >
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hành động (Cập nhật trạng thái) -->
+            <div class="col-4">
+              <div class="card" style="padding: 20px">
+                <h4 class="mb-4 text-center">Cập Nhật Trạng Thái</h4>
+
+                <!-- Select nước -->
+                <div class="mb-3">
+                  <label for="productSelect" class="form-label"
+                    >Chọn nước:</label
+                  >
+                  <select id="productSelect" class="form-select">
+                    <option value="">-- Chọn nước --</option>
+                  </select>
+                </div>
+
+                <!-- Radio Status -->
+                <div class="mb-4">
+                  <label class="form-label d-block mb-3">Trạng Thái:</label>
+                  <div class="d-flex gap-4">
+                    <div style="margin-left: 60px" class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="status"
+                        id="statusAvailable"
+                        value="available"
+                        checked
+                      />
+                      <label class="form-check-label" for="statusAvailable">
+                        <span style="color: #28a745">●</span> Còn hàng
+                      </label>
+                    </div>
+                    <div style="margin-left: 80px" class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="status"
+                        id="statusOutOfStock"
+                        value="unavailable"
+                      />
+                      <label class="form-check-label" for="statusOutOfStock">
+                        <span style="color: #dc3545">●</span> Hết hàng
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Update Button -->
+                <button
+                  id="updateBtn"
+                  class="btn btn-primary w-100 text-center"
+                >
+                  <i class="bx bxs-save"></i> Cập Nhật
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer th:replace="admin/components/footer :: footer"></footer>
+    </div>
+
+    <!-- Bootstrap JS - CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Component JS -->
+    <script th:src="@{/js/cashier/sidebar.js}"></script>
+    <script th:src="@{/js/cashier/navbar.js}"></script>
+
+    <script th:inline="javascript">
+      // Nhúng dữ liệu toàn bộ thực đơn vào biến JS (allMenuItems lấy từ Controller)
+      const rawMenuItems = /*[[${allMenuItems}]]*/ [];
+      const rawCategories = /*[[${categories}]]*/ [];
+    </script>
+    <script th:src="@{/js/custom-alert.js}"></script>
+    <!-- Cashier inventory JS -->
+    <script th:src="@{/js/cashier/inventory.js}"></script>
+  </body>
+</html>

@@ -1,0 +1,222 @@
+[
+  {
+    "id": "USER001",
+    "username": "admin",
+    "email": "admin@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "admin",
+    "staff_id": "STAFF001",
+    "status": "active",
+    "last_login": "2026-05-04T14:00:00Z",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  {
+    "id": "USER002",
+    "username": "cashier1",
+    "email": "tran.thi.b@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "cashier",
+    "staff_id": "STAFF002",
+    "status": "active",
+    "last_login": "2026-05-04T15:30:00Z",
+    "createdAt": "2026-02-01T00:00:00Z"
+  },
+  {
+    "id": "USER003",
+    "username": "cashier2",
+    "email": "pham.van.c@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "cashier",
+    "staff_id": "STAFF003",
+    "status": "active",
+    "last_login": "2026-05-04T16:00:00Z",
+    "createdAt": "2026-02-15T00:00:00Z"
+  },
+  {
+    "id": "USER004",
+    "username": "waiter1",
+    "email": "le.thi.d@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF004",
+    "status": "active",
+    "last_login": "2026-05-04T17:00:00Z",
+    "createdAt": "2026-03-01T00:00:00Z"
+  },
+  {
+    "id": "USER005",
+    "username": "waiter2",
+    "email": "hoang.van.e@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF005",
+    "status": "active",
+    "last_login": "2026-05-04T17:30:00Z",
+    "createdAt": "2026-03-15T00:00:00Z"
+  },
+  {
+    "id": "USER006",
+    "username": "manager1",
+    "email": "do.van.g@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "admin",
+    "staff_id": "STAFF007",
+    "status": "active",
+    "last_login": "2026-05-04T08:00:00Z",
+    "createdAt": "2026-04-15T00:00:00Z"
+  },
+  {
+    "id": "USER007",
+    "username": "manager2",
+    "email": "bui.thi.h@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "admin",
+    "staff_id": "STAFF008",
+    "status": "active",
+    "last_login": "2026-05-04T08:30:00Z",
+    "createdAt": "2026-05-01T00:00:00Z"
+  },
+  {
+    "id": "USER008",
+    "username": "cashier3",
+    "email": "to.van.i@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "cashier",
+    "staff_id": "STAFF009",
+    "status": "active",
+    "last_login": "2026-05-04T14:30:00Z",
+    "createdAt": "2026-05-15T00:00:00Z"
+  },
+  {
+    "id": "USER009",
+    "username": "cashier4",
+    "email": "dinh.thi.j@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "cashier",
+    "staff_id": "STAFF010",
+    "status": "active",
+    "last_login": "2026-05-04T15:00:00Z",
+    "createdAt": "2026-06-01T00:00:00Z"
+  },
+  {
+    "id": "USER010",
+    "username": "staff1",
+    "email": "trinh.van.k@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF010",
+    "status": "active",
+    "last_login": "2026-05-04T17:45:00Z",
+    "createdAt": "2026-06-15T00:00:00Z"
+  },
+  {
+    "id": "USER011",
+    "username": "staff2",
+    "email": "vu.thi.l@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF011",
+    "status": "active",
+    "last_login": "2026-05-04T18:00:00Z",
+    "createdAt": "2026-07-01T00:00:00Z"
+  },
+  {
+    "id": "USER012",
+    "username": "staff3",
+    "email": "duong.van.m@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF012",
+    "status": "active",
+    "last_login": "2026-05-04T18:15:00Z",
+    "createdAt": "2026-07-15T00:00:00Z"
+  },
+  {
+    "id": "USER013",
+    "username": "staff4",
+    "email": "tu.thi.n@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF013",
+    "status": "active",
+    "last_login": "2026-05-04T18:30:00Z",
+    "createdAt": "2026-08-01T00:00:00Z"
+  },
+  {
+    "id": "USER014",
+    "username": "staff5",
+    "email": "mac.van.o@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF014",
+    "status": "active",
+    "last_login": "2026-05-04T18:45:00Z",
+    "createdAt": "2026-08-15T00:00:00Z"
+  },
+  {
+    "id": "USER015",
+    "username": "staff6",
+    "email": "phan.thi.p@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF015",
+    "status": "active",
+    "last_login": "2026-05-04T19:00:00Z",
+    "createdAt": "2026-09-01T00:00:00Z"
+  },
+  {
+    "id": "USER016",
+    "username": "staff7",
+    "email": "quach.van.q@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF016",
+    "status": "active",
+    "last_login": "2026-05-04T19:15:00Z",
+    "createdAt": "2026-09-15T00:00:00Z"
+  },
+  {
+    "id": "USER017",
+    "username": "staff8",
+    "email": "ro.thi.r@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF017",
+    "status": "active",
+    "last_login": "2026-05-04T19:30:00Z",
+    "createdAt": "2026-10-01T00:00:00Z"
+  },
+  {
+    "id": "USER018",
+    "username": "staff9",
+    "email": "son.van.s@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF018",
+    "status": "active",
+    "last_login": "2026-05-04T19:45:00Z",
+    "createdAt": "2026-10-15T00:00:00Z"
+  },
+  {
+    "id": "USER019",
+    "username": "staff10",
+    "email": "ta.thi.t@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF019",
+    "status": "active",
+    "last_login": "2026-05-04T20:00:00Z",
+    "createdAt": "2026-11-01T00:00:00Z"
+  },
+  {
+    "id": "USER020",
+    "username": "staff11",
+    "email": "nguyen.thi.u@coffeshop.com",
+    "password_hash": "$2b$10$sh5Od65HifubM5C46JrBDe7sEcNGB4.RzerPVS8GNJH5yAvF/U12.",
+    "role": "staff",
+    "staff_id": "STAFF020",
+    "status": "active",
+    "last_login": "2026-05-04T20:15:00Z",
+    "createdAt": "2026-11-15T00:00:00Z"
+  }
+]

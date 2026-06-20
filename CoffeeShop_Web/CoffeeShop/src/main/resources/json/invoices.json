@@ -1,0 +1,406 @@
+[
+  {
+    "id": "260504143001",
+    "table_id": "TABLE001",
+    "table_number": 1,
+    "invoice_date": "2026-05-04T14:30:00Z",
+    "items": [
+      {
+        "item_id": "ITEM001",
+        "item_name": "Cà Phê Đen",
+        "quantity": 2,
+        "unit_price": 20000,
+        "total": 40000
+      },
+      {
+        "item_id": "ITEM005",
+        "item_name": "Trà Chanh",
+        "quantity": 1,
+        "unit_price": 25000,
+        "total": 25000
+      }
+    ],
+    "subtotal": 65000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 65000,
+    "payment_method": "cash",
+    "status": "paid",
+    "notes": "Quán khách",
+    "staff_id": "STAFF002",
+    "createdAt": "2026-05-04T14:30:00Z"
+  },
+  {
+    "id": "260504151502",
+    "table_id": "TABLE003",
+    "table_number": 3,
+    "invoice_date": "2026-05-04T15:15:00Z",
+    "items": [
+      {
+        "item_id": "ITEM002",
+        "item_name": "Cà Phê Sữa",
+        "quantity": 3,
+        "unit_price": 25000,
+        "total": 75000
+      },
+      {
+        "item_id": "ITEM008",
+        "item_name": "Sinh Tố Dâu",
+        "quantity": 2,
+        "unit_price": 35000,
+        "total": 70000
+      },
+      {
+        "item_id": "ITEM011",
+        "item_name": "Nước Cam Tươi",
+        "quantity": 1,
+        "unit_price": 30000,
+        "total": 30000
+      }
+    ],
+    "subtotal": 175000,
+    "tax": 0,
+    "discount": 20000,
+    "total_amount": 155000,
+    "payment_method": "card",
+    "status": "paid",
+    "notes": "Nhóm bạn - khuyến mãi 20k",
+    "staff_id": "STAFF002",
+    "createdAt": "2026-05-04T15:15:00Z"
+  },
+  {
+    "id": "260504134503",
+    "table_id": "TABLE005",
+    "table_number": 5,
+    "invoice_date": "2026-05-04T13:45:00Z",
+    "items": [
+      {
+        "item_id": "ITEM003",
+        "item_name": "Americano",
+        "quantity": 4,
+        "unit_price": 25000,
+        "total": 100000
+      }
+    ],
+    "subtotal": 100000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 100000,
+    "payment_method": "cash",
+    "status": "cancelled",
+    "notes": "Khách hủy đơn",
+    "staff_id": "STAFF003",
+    "createdAt": "2026-05-04T13:45:00Z"
+  },
+  {
+    "id": "260503182004",
+    "table_id": "TABLE002",
+    "table_number": 2,
+    "invoice_date": "2026-05-03T18:20:00Z",
+    "items": [
+      {
+        "item_id": "ITEM004",
+        "item_name": "Cà Phê Bạc Xỉu",
+        "quantity": 1,
+        "unit_price": 30000,
+        "total": 30000
+      },
+      {
+        "item_id": "ITEM006",
+        "item_name": "Trà Xanh Matcha",
+        "quantity": 2,
+        "unit_price": 20000,
+        "total": 40000
+      },
+      {
+        "item_id": "ITEM009",
+        "item_name": "Sinh Tố Bơ",
+        "quantity": 1,
+        "unit_price": 35000,
+        "total": 35000
+      },
+      {
+        "item_id": "ITEM012",
+        "item_name": "Nước Dứa Tươi",
+        "quantity": 2,
+        "unit_price": 30000,
+        "total": 60000
+      }
+    ],
+    "subtotal": 165000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 165000,
+    "payment_method": "cash",
+    "status": "paid",
+    "notes": "Gia đình",
+    "staff_id": "STAFF004",
+    "createdAt": "2026-05-03T18:20:00Z"
+  },
+  {
+    "id": "260503120005",
+    "table_id": "TABLE004",
+    "table_number": 4,
+    "invoice_date": "2026-05-03T12:00:00Z",
+    "items": [
+      {
+        "item_id": "ITEM001",
+        "item_name": "Cà Phê Đen",
+        "quantity": 1,
+        "unit_price": 20000,
+        "total": 20000
+      },
+      {
+        "item_id": "ITEM002",
+        "item_name": "Cà Phê Sữa",
+        "quantity": 1,
+        "unit_price": 25000,
+        "total": 25000
+      },
+      {
+        "item_id": "ITEM005",
+        "item_name": "Trà Chanh",
+        "quantity": 2,
+        "unit_price": 25000,
+        "total": 50000
+      },
+      {
+        "item_id": "ITEM008",
+        "item_name": "Sinh Tố Dâu",
+        "quantity": 1,
+        "unit_price": 35000,
+        "total": 35000
+      },
+      {
+        "item_id": "ITEM011",
+        "item_name": "Nước Cam Tươi",
+        "quantity": 1,
+        "unit_price": 30000,
+        "total": 30000
+      },
+      {
+        "item_id": "ITEM013",
+        "item_name": "Nước Táo Tươi",
+        "quantity": 1,
+        "unit_price": 30000,
+        "total": 30000
+      }
+    ],
+    "subtotal": 200000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 200000,
+    "payment_method": "card",
+    "status": "paid",
+    "notes": "Bàn ăn trưa",
+    "staff_id": "STAFF002",
+    "createdAt": "2026-05-03T12:00:00Z"
+  },
+  {
+    "id": "260502164506",
+    "table_id": "TABLE006",
+    "table_number": 6,
+    "invoice_date": "2026-05-02T16:45:00Z",
+    "items": [
+      {
+        "item_id": "ITEM004",
+        "item_name": "Cà Phê Lạnh",
+        "quantity": 2,
+        "unit_price": 30000,
+        "total": 60000
+      },
+      {
+        "item_id": "ITEM009",
+        "item_name": "Sinh Tố Bơ",
+        "quantity": 1,
+        "unit_price": 35000,
+        "total": 35000
+      }
+    ],
+    "subtotal": 95000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 95000,
+    "payment_method": "cash",
+    "status": "paid",
+    "notes": "Khách thân thiết",
+    "staff_id": "STAFF003",
+    "createdAt": "2026-05-02T16:45:00Z"
+  },
+  {
+    "id": "260502113007",
+    "table_id": "TABLE007",
+    "table_number": 7,
+    "invoice_date": "2026-05-02T11:30:00Z",
+    "items": [
+      {
+        "item_id": "ITEM002",
+        "item_name": "Cà Phê Sữa",
+        "quantity": 2,
+        "unit_price": 25000,
+        "total": 50000
+      },
+      {
+        "item_id": "ITEM006",
+        "item_name": "Trà Xanh Matcha",
+        "quantity": 1,
+        "unit_price": 20000,
+        "total": 20000
+      },
+      {
+        "item_id": "ITEM012",
+        "item_name": "Nước Dứa Tươi",
+        "quantity": 2,
+        "unit_price": 30000,
+        "total": 60000
+      }
+    ],
+    "subtotal": 130000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 130000,
+    "payment_method": "cash",
+    "status": "paid",
+    "notes": "Quầy bar",
+    "staff_id": "STAFF004",
+    "createdAt": "2026-05-02T11:30:00Z"
+  },
+  {
+    "id": "260505093008",
+    "table_id": "TABLE008",
+    "table_number": 8,
+    "invoice_date": "2026-05-05T09:30:00Z",
+    "items": [
+      {
+        "item_id": "ITEM001",
+        "item_name": "Cà Phê Đen",
+        "quantity": 3,
+        "unit_price": 20000,
+        "total": 60000
+      },
+      {
+        "item_id": "ITEM003",
+        "item_name": "Americano",
+        "quantity": 2,
+        "unit_price": 25000,
+        "total": 50000
+      }
+    ],
+    "subtotal": 110000,
+    "tax": 0,
+    "discount": 10000,
+    "total_amount": 100000,
+    "payment_method": "card",
+    "status": "paid",
+    "notes": "Khuyến mãi buổi sáng",
+    "staff_id": "STAFF002",
+    "createdAt": "2026-05-05T09:30:00Z"
+  },
+  {
+    "id": "260505145509",
+    "table_id": "TABLE009",
+    "table_number": 9,
+    "invoice_date": "2026-05-05T14:55:00Z",
+    "items": [
+      {
+        "item_id": "ITEM007",
+        "item_name": "Trà Oolong",
+        "quantity": 1,
+        "unit_price": 20000,
+        "total": 20000
+      },
+      {
+        "item_id": "ITEM010",
+        "item_name": "Sinh Tố Xoài",
+        "quantity": 2,
+        "unit_price": 35000,
+        "total": 70000
+      },
+      {
+        "item_id": "ITEM011",
+        "item_name": "Nước Cam Tươi",
+        "quantity": 1,
+        "unit_price": 30000,
+        "total": 30000
+      }
+    ],
+    "subtotal": 120000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 120000,
+    "payment_method": "cash",
+    "status": "paid",
+    "notes": "Khách nữ - vui vẻ",
+    "staff_id": "STAFF003",
+    "createdAt": "2026-05-05T14:55:00Z"
+  },
+  {
+    "id": "260506101010",
+    "table_id": "TABLE010",
+    "table_number": 10,
+    "invoice_date": "2026-05-06T10:10:00Z",
+    "items": [
+      {
+        "item_id": "ITEM004",
+        "item_name": "Cà Phê Bạc Xỉu",
+        "quantity": 2,
+        "unit_price": 30000,
+        "total": 60000
+      },
+      {
+        "item_id": "ITEM009",
+        "item_name": "Sinh Tố Bơ",
+        "quantity": 1,
+        "unit_price": 35000,
+        "total": 35000
+      }
+    ],
+    "subtotal": 95000,
+    "tax": 0,
+    "discount": 0,
+    "total_amount": 95000,
+    "payment_method": "card",
+    "status": "paid",
+    "notes": "Nhân viên văn phòng",
+    "staff_id": "STAFF005",
+    "createdAt": "2026-05-06T10:10:00Z"
+  },
+  {
+    "id": "260506173511",
+    "table_id": "TABLE002",
+    "table_number": 2,
+    "invoice_date": "2026-05-06T17:35:00Z",
+    "items": [
+      {
+        "item_id": "ITEM005",
+        "item_name": "Trà Chanh",
+        "quantity": 3,
+        "unit_price": 25000,
+        "total": 75000
+      },
+      {
+        "item_id": "ITEM008",
+        "item_name": "Sinh Tố Dâu",
+        "quantity": 2,
+        "unit_price": 35000,
+        "total": 70000
+      },
+      {
+        "item_id": "ITEM013",
+        "item_name": "Nước Táo Tươi",
+        "quantity": 1,
+        "unit_price": 30000,
+        "total": 30000
+      }
+    ],
+    "subtotal": 175000,
+    "tax": 0,
+    "discount": 15000,
+    "total_amount": 160000,
+    "payment_method": "cash",
+    "status": "paid",
+    "notes": "Nhóm bạn - giảm giá 15k",
+    "staff_id": "STAFF002",
+    "createdAt": "2026-05-06T17:35:00Z"
+  }
+]

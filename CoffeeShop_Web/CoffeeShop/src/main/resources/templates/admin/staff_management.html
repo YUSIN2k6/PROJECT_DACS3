@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Nhân Viên - CoffeeShop</title>
+
+    <!-- Bootstrap CSS - CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <!-- Boxicons CSS - CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+    />
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+
+    <!-- Component CSS -->
+    <link rel="stylesheet" th:href="@{/css/admin/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/staff_management.css}" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div th:replace="admin/components/sidebar :: sidebar"></div>
+
+    <!-- Navbar -->
+    <nav th:replace="admin/components/navigator :: navbar"></nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Breadcrumb & Page Title -->
+        <div class="breadcrumb-section">
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="/admin/dashboard">Home</a>
+              </li>
+              <li class="breadcrumb-item active">Quản Lý Nhân Viên</li>
+            </ol>
+          </nav>
+          <h1 class="page-title">Quản Lý Nhân Viên</h1>
+        </div>
+
+        <!-- Staff Management Container -->
+        <div class="staff-container">
+          <!-- LEFT COLUMN - STAFF TABLE -->
+          <div class="staff-table-section">
+            <h3>
+              <i class="bx bxs-list-check"></i>
+              Danh Sách Nhân Viên
+            </h3>
+
+            <!-- Search & Filter Section -->
+            <div class="search-filter-section">
+              <div class="search-box-staff">
+                <i class="bx bx-search"></i>
+                <input
+                  type="text"
+                  id="searchStaff"
+                  placeholder="Tìm kiếm nhân viên..."
+                />
+              </div>
+
+              <div class="position-filter">
+                <select id="positionFilter" class="form-control">
+                  <option value="">-- Tất cả chức vụ --</option>
+                  <option value="Pha Chế">Pha Chế</option>
+                  <option value="Thu Ngân">Thu Ngân</option>
+                  <option value="Phục Vụ">Phục Vụ</option>
+                  <option value="Quản Lý">Quản Lý</option>
+                  <option value="Quản Trị Viên">Quản Trị Viên</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Table Responsive -->
+            <div class="table-responsive">
+              <table class="table table-hover text-center align-middle">
+                <thead>
+                  <tr>
+                    <th style="width: 5%">STT</th>
+                    <th>Họ và Tên</th>
+                    <th style="width: 20%">Email</th>
+                    <th style="width: 15%">Số Điện Thoại</th>
+                    <th style="width: 15%">Chức Vụ</th>
+                    <th style="width: 15%">Tình Trạng</th>
+                    <th style="width: 10%">Hành Động</th>
+                  </tr>
+                </thead>
+                <tbody id="staffTableBody">
+                  <tr th:each="staff, iterStat : ${staffList}">
+                    <td th:text="${startEntry + iterStat.index}">1</td>
+                    <td th:text="${staff.name}">Nguyễn Văn A</td>
+                    <td th:text="${staff.email}">nguyen.van.a@coffeshop.com</td>
+                    <td th:text="${staff.phone}">0901234567</td>
+                    <td th:text="${staff.position}">Quản lý</td>
+                    <td>
+                      <span
+                        th:class="${staff.status == 'active'} ? 'badge bg-success' : 'badge bg-danger'"
+                        th:text="${staff.status == 'active'} ? 'Đang hoạt động' : 'Chưa hoạt động'"
+                        >Đang làm việc</span
+                      >
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-sm btn-info me-1 edit-btn"
+                        th:data-id="${staff.id}"
+                      >
+                        <i class="bx bx-edit"></i>
+                      </button>
+                      <button
+                        class="btn btn-sm btn-danger delete-btn"
+                        th:data-id="${staff.id}"
+                      >
+                        <i class="bx bx-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr th:if="${#lists.isEmpty(staffList)}">
+                    <td colspan="7" class="text-center text-muted py-3">
+                      Chưa có dữ liệu nhân sự trên hệ thống
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center mt-3">
+              <nav aria-label="Page navigation" th:if="${totalPages > 1}">
+                <ul class="pagination mb-0">
+                  <li
+                    class="page-item"
+                    th:classappend="${currentPage == 1} ? 'disabled'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/admin/staff_management(page=${currentPage - 1}, size=${pageSize})}"
+                      aria-label="Previous"
+                    >
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+
+                  <li
+                    class="page-item"
+                    th:each="pageNumber : ${#numbers.sequence(1, totalPages)}"
+                    th:classappend="${pageNumber == currentPage} ? 'active'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/admin/staff_management(page=${pageNumber}, size=${pageSize})}"
+                      th:text="${pageNumber}"
+                      >1</a
+                    >
+                  </li>
+
+                  <li
+                    class="page-item"
+                    th:classappend="${currentPage == totalPages} ? 'disabled'"
+                  >
+                    <a
+                      class="page-link"
+                      th:href="@{/admin/staff_management(page=${currentPage + 1}, size=${pageSize})}"
+                      aria-label="Next"
+                    >
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN - STAFF FORM -->
+          <div class="staff-form-section">
+            <h3>
+              <i class="bx bxs-user-plus"></i>
+              <span id="formTitle">Thêm/Cập nhật Nhân Viên</span>
+            </h3>
+
+            <form id="staffForm">
+              <!-- Hidden ID field -->
+              <input type="hidden" id="staffId" />
+
+              <!-- Họ và Tên -->
+              <div class="form-group">
+                <label for="fullName"
+                  >Họ và Tên <span style="color: red">*</span></label
+                >
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Nhập họ và tên"
+                  required
+                />
+              </div>
+
+              <!-- Số Điện Thoại -->
+              <div class="form-group">
+                <label for="phone"
+                  >Số Điện Thoại <span style="color: red">*</span></label
+                >
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Nhập số điện thoại"
+                  pattern="[0-9]{10,}"
+                  required
+                />
+              </div>
+
+              <!-- Email -->
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Nhập email"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="username"
+                  >Tên tài khoản <span style="color: red">*</span></label
+                >
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Nhập tên tài khoản"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="accountPassword"
+                  >Mật khẩu <span style="color: red">*</span></label
+                >
+                <input
+                  type="password"
+                  id="accountPassword"
+                  name="accountPassword"
+                  placeholder="Nhập mật khẩu"
+                  required
+                />
+              </div>
+
+              <!-- Chức Vụ -->
+              <div class="form-group">
+                <label for="position"
+                  >Chức Vụ <span style="color: red">*</span></label
+                >
+                <select id="position" name="position" required>
+                  <option value="">-- Chọn chức vụ --</option>
+                  <option value="Pha Chế">Pha Chế</option>
+                  <option value="Thu Ngân">Thu Ngân</option>
+                  <option value="Phục Vụ">Phục Vụ</option>
+                  <option value="Quản Lý">Quản Lý</option>
+                  <option value="Quản Trị Viên">Quản Trị Viên</option>
+                </select>
+              </div>
+
+              <!-- Tình Trạng Hoạt Động -->
+              <div class="form-group">
+                <label for="status"
+                  >Tình Trạng Hoạt Động <span style="color: red">*</span></label
+                >
+                <select id="status" name="status" required>
+                  <option value="">-- Chọn tình trạng --</option>
+                  <option value="active">Đang làm</option>
+                  <option value="inactive">Dừng làm</option>
+                </select>
+              </div>
+
+              <!-- Form Actions -->
+              <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                  <i class="bx bx-save"></i>
+                  Lưu
+                </button>
+                <button type="reset" class="btn-reset">
+                  <i class="bx bx-reset"></i>
+                  Hủy
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer th:replace="admin/components/footer :: footer"></footer>
+    </div>
+
+    <!-- Bootstrap JS - CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Component JS -->
+    <script th:src="@{/js/admin/sidebar.js}"></script>
+    <script th:src="@{/js/admin/navbar.js}"></script>
+    <script th:src="@{/js/custom-alert.js}"></script>
+    <!-- Staff Management JS -->
+    <script th:src="@{/js/admin/staff_management.js}"></script>
+  </body>
+</html>

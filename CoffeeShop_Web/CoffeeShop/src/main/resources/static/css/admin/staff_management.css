@@ -1,0 +1,360 @@
+/* ===== STAFF MANAGEMENT STYLES ===== */
+
+.staff-container {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: 30px;
+  /* margin-bottom: 30px; */
+}
+
+/* LEFT COLUMN - TABLE */
+.staff-table-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+.staff-table-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staff-table-section h3 i {
+  color: #a0826d;
+  font-size: 22px;
+}
+
+/* Search & Filter Section */
+.search-filter-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-box-staff {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  flex: 1;
+  min-width: 250px;
+  transition: all 0.3s ease;
+}
+
+.search-box-staff:focus-within {
+  border-color: #a0826d;
+  box-shadow: 0 0 0 3px rgba(160, 130, 109, 0.1);
+}
+
+.search-box-staff i {
+  color: #999;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.search-box-staff input {
+  border: none;
+  background: none;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+  min-width: 0;
+}
+
+.search-box-staff input::placeholder {
+  color: #ccc;
+}
+
+.position-filter {
+  min-width: 200px;
+}
+
+.position-filter .form-control {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  height: 44px;
+  transition: all 0.3s ease;
+}
+
+.position-filter .form-control:focus {
+  border-color: #a0826d;
+  box-shadow: 0 0 0 3px rgba(160, 130, 109, 0.1);
+}
+
+/* Table Styling */
+/* Sử dụng global table styles từ style.css */
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+.btn-view {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-view:hover {
+  background-color: #545b62;
+  transform: translateY(-2px);
+}
+
+/* RIGHT COLUMN - FORM */
+.staff-form-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  height: fit-content;
+}
+
+.staff-form-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staff-form-section h3 i {
+  color: #a0826d;
+  font-size: 22px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #a0826d;
+  box-shadow: 0 0 0 3px rgba(160, 130, 109, 0.1);
+}
+
+/* Form Buttons */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-submit {
+  flex: 1;
+  padding: 10px;
+  background-color: #a0826d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-submit:hover {
+  background-color: #8b6d57;
+  transform: translateY(-2px);
+}
+
+.btn-reset {
+  flex: 1;
+  padding: 10px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+  background-color: #545b62;
+  transform: translateY(-2px);
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+}
+
+.pagination .page-link {
+  color: #a0826d;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin: 0 3px;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background: #a0826d;
+  color: white;
+  border-color: #a0826d;
+}
+
+.pagination .page-item.active .page-link {
+  background: #a0826d;
+  border-color: #a0826d;
+  color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Tablet Layout */
+@media (max-width: 1200px) {
+  .staff-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .staff-form-section {
+    height: auto;
+  }
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .staff-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .staff-table-section,
+  .staff-form-section {
+    padding: 15px;
+  }
+
+  .table {
+    font-size: 12px;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 8px 4px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-sm {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  color: #ddd;
+}
+
+.empty-state p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #a0826d;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
