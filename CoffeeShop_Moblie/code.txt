@@ -1,0 +1,1993 @@
+<files>
+<file name="app\src\main\AndroidManifest.xml">
+<![CDATA[
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CoffeeShopMobile">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.CoffeeShopMobile">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\base\BaseActivity.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.base
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
+/**
+ * BaseActivity
+ *
+ * Project này là 100% Jetpack Compose, vì vậy không dùng ViewBinding / setContentView.
+ * Lớp này giữ lại các tiện ích chung như Toast và trạng thái loading.
+ */
+abstract class BaseActivity : ComponentActivity() {
+
+    /**
+     * Compose-friendly loading state that screens can observe.
+     * You can wire this into a global LoadingDialog inside setContent if needed.
+     */
+    var isLoading: Boolean by mutableStateOf(false)
+        private set
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupUI()
+        observeViewModel()
+    }
+
+    /**
+     * Setup UI elements (buttons, listeners, etc.)
+     * Activity con override để setup các views của nó
+     */
+    abstract fun setupUI()
+
+    /**
+     * Observe ViewModel LiveData
+     * Activity con override nếu cần observe
+     */
+    open fun observeViewModel() {}
+
+    /**
+     * Show global loading state.
+     */
+    fun showLoading() {
+        isLoading = true
+    }
+
+    /**
+     * Hide global loading state.
+     */
+    fun hideLoading() {
+        isLoading = false
+    }
+
+    /**
+     * Hiển thị Toast notification
+     */
+    fun showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
+        Toast.makeText(this, message, duration).show()
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\base\BaseRepository.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.base
+
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+
+/**
+ * BaseRepository - Lớp cha quản lý kết nối Firebase cho toàn bộ Repository
+ */
+open class BaseRepository {
+
+    // Khởi tạo sẵn Firebase Auth dùng chung cho việc đăng nhập/phân quyền
+    protected val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
+    // Khởi tạo sẵn Realtime Database trỏ thẳng vào gốc dữ liệu của quán
+    protected val database: FirebaseDatabase by lazy {
+        FirebaseDatabase.getInstance()
+    }
+
+    /**
+     * Lấy ID của nhân viên đang đăng nhập hiện tại
+     */
+    fun getCurrentUserId(): String? {
+        return auth.currentUser?.uid
+    }
+
+    /**
+     * Kiểm tra xem có nhân viên nào đang đăng nhập trong máy không
+     */
+    fun isUserLoggedIn(): Boolean {
+        return auth.currentUser != null
+    }
+
+    /**
+     * Đăng xuất tài khoản nhân viên khỏi thiết bị
+     */
+    fun logout() {
+        auth.signOut()
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\data\model\ActiveOrder.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.data.model
+
+data class ActiveOrder(
+    var notes: String = "",
+    var items: List<OrderItem> = emptyList()
+)
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\data\model\MenuItem.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.data.model
+
+import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.PropertyName
+
+@IgnoreExtraProperties
+data class MenuItem(
+    var id: String = "",
+    var name: String = "",
+    var price: Double = 0.0,
+    var status: String = "available", // available (Còn hàng), unavailable (Hết hàng)
+
+    @get:PropertyName("category_id")
+    @set:PropertyName("category_id")
+    var categoryId: String = "",
+
+    @get:PropertyName("image_url")
+    @set:PropertyName("image_url")
+    var imageUrl: String? = null,
+
+    var createdAt: String? = null
+)
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\data\model\OrderItem.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.data.model
+
+import com.google.firebase.database.PropertyName
+
+data class OrderItem(
+    @get:PropertyName("item_id")
+    @set:PropertyName("item_id")
+    var itemId: String = "",
+
+    @get:PropertyName("item_name")
+    @set:PropertyName("item_name")
+    var itemName: String = "",
+
+    var quantity: Int = 1,
+    var price: Double = 0.0,
+    var served: Boolean = false
+) {
+    val total: Double
+        get() = price * quantity
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\data\model\Table.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.data.model
+
+import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.PropertyName
+
+@IgnoreExtraProperties // <-- Lá chắn bảo vệ App không bị văng khi Firebase có dữ liệu lạ
+data class Table(
+    var id: String = "",
+
+    @get:PropertyName("table_number")
+    @set:PropertyName("table_number")
+    var tableNumber: Int = 0,
+
+    var status: String = "available",
+
+    @get:PropertyName("merged_with")
+    @set:PropertyName("merged_with")
+    var mergedWith: Int? = null,
+
+    var createdAt: String? = null,
+
+    @get:PropertyName("current_order")
+    @set:PropertyName("current_order")
+    var currentOrder: ActiveOrder? = null
+) {
+    // ==========================================
+    // CÁC HÀM PHỤ TRỢ (Giúp code UI cực kỳ nhàn)
+    // ==========================================
+
+    /**
+     * Tự động cộng dồn tổng tiền của các món trong bàn
+     */
+    fun getTotalPrice(): Double {
+        // Nếu currentOrder null thì trả về 0.0, nếu có thì tính tổng (giá * số lượng)
+        return currentOrder?.items?.sumOf { it.price * it.quantity } ?: 0.0
+    }
+
+    /**
+     * Lấy tổng số lượng ly nước khách đang gọi
+     */
+    fun getTotalItemCount(): Int {
+        return currentOrder?.items?.sumOf { it.quantity } ?: 0
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\data\model\User.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.data.model
+
+import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.PropertyName
+
+@IgnoreExtraProperties
+data class User(
+    var id: String = "",
+    var username: String = "",
+    var email: String? = null,
+    var role: String = "staffer", // admin, cashier, staffer
+    var status: String = "active", // active, inactive
+
+    @get:PropertyName("password_hash")
+    @set:PropertyName("password_hash")
+    var passwordHash: String = "",
+
+    @get:PropertyName("staff_id")
+    @set:PropertyName("staff_id")
+    var staffId: String? = null,
+
+    @get:PropertyName("last_login")
+    @set:PropertyName("last_login")
+    var lastLogin: String? = null,
+
+    var createdAt: String? = null
+)
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\data\remote\TableRemoteDataSource.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.data.remote
+
+import com.example.coffeeshopmobile.data.model.Table
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
+import com.example.coffeeshopmobile.data.model.MenuItem
+class TableRemoteDataSource {
+    // Trỏ vào nhánh "tables" trên Firebase
+    private val databaseRef = FirebaseDatabase.getInstance().getReference("tables")
+
+    /**
+     * Lắng nghe Realtime danh sách bàn. Trả về luồng Flow liên tục.
+     */
+    fun listenToTables(): Flow<List<Table>> = callbackFlow {
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val tables = mutableListOf<Table>()
+                for (child in snapshot.children) {
+                    val table = child.getValue(Table::class.java)
+                    if (table != null) {
+                        table.id = child.key ?: "" // Gắn key (Vd: TABLE001) vào biến id
+                        tables.add(table)
+                    }
+                }
+                // Gửi mảng bàn vào luồng
+                trySend(tables).isSuccess
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
+            }
+        }
+
+        databaseRef.addValueEventListener(listener)
+        // Khi ViewModel bị hủy, tự đóng luồng lắng nghe cho nhẹ máy
+        awaitClose { databaseRef.removeEventListener(listener) }
+    }
+
+    /**
+     * Hàm cập nhật trạng thái của bàn lên Firebase (Đã nâng cấp xóa dữ liệu khi hủy khách)
+     */
+    suspend fun updateTableStatus(tableId: String, newStatus: String): Boolean {
+        return try {
+            val updates = mutableMapOf<String, Any?>()
+            updates["status"] = newStatus
+
+            // Nếu hủy khách đưa bàn về trống -> Xóa sạch đơn hàng và lịch sử ghi chú cũ của bàn đó luôn
+            if (newStatus == "available") {
+                updates["current_order"] = null
+            }
+
+            databaseRef.child(tableId).updateChildren(updates).await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Hàm xử lý gộp bàn lên Firebase
+     */
+    suspend fun mergeTable(currentTableId: String, targetTableNumber: Int): Boolean {
+        return try {
+            val updates = mapOf(
+                "status" to "merged",
+                "merged_with" to targetTableNumber
+            )
+            // Cập nhật đồng thời cả 2 trường của bàn hiện tại
+            databaseRef.child(currentTableId).updateChildren(updates).await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Rời gộp cho riêng 1 bàn phụ (Đưa về trạng thái trống available)
+     */
+    suspend fun unmergeTable(tableId: String): Boolean {
+        return try {
+            val updates = mapOf(
+                "status" to "available",
+                "merged_with" to null
+            )
+            databaseRef.child(tableId).updateChildren(updates).await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Rời gộp tất cả các bàn phụ đang chỉ vào bàn chính này
+     */
+    suspend fun unmergeAllFromTarget(tablesToUnmerge: List<String>): Boolean {
+        return try {
+            val updates = mutableMapOf<String, Any?>()
+            for (id in tablesToUnmerge) {
+                updates["$id/status"] = "available"
+                updates["$id/merged_with"] = null
+            }
+            if (updates.isNotEmpty()) {
+                databaseRef.updateChildren(updates).await()
+            }
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Hàm di chuyển toàn bộ cấu trúc dữ liệu từ bàn gốc sang bàn đích
+     */
+    suspend fun transferTable(originTable: Table, targetTable: Table, allTables: List<Table>): Boolean {
+        return try {
+            val updates = mutableMapOf<String, Any?>()
+
+            // 1. Giải phóng hoàn toàn bàn gốc về trạng thái trống
+            updates["${originTable.id}/status"] = "available"
+            updates["${originTable.id}/current_order"] = null
+            updates["${originTable.id}/merged_with"] = null
+
+            // 2. Sao chép toàn bộ "ruột" dữ liệu sang bàn đích mới
+            updates["${targetTable.id}/status"] = originTable.status
+            updates["${targetTable.id}/current_order"] = originTable.currentOrder
+            updates["${targetTable.id}/merged_with"] = originTable.mergedWith
+
+            // 3. BẢO VỆ ĐỒNG BỘ GỘP: Nếu bàn gốc là bàn chính có các bàn khác đang gộp vào,
+            // ta phải dò tìm và đổi merged_with của các bàn phụ đó sang số bàn mới.
+            val subTables = allTables.filter { it.status == "merged" && it.mergedWith == originTable.tableNumber }
+            for (sub in subTables) {
+                updates["${sub.id}/merged_with"] = targetTable.tableNumber
+            }
+
+            // Đẩy một lệnh duy nhất lên mạng để cập nhật đồng loạt các nhánh
+            databaseRef.updateChildren(updates).await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Cập nhật chuỗi ghi chú tổng hợp vào cục current_order trên Firebase
+     */
+    suspend fun updateTableNotes(tableId: String, notes: String): Boolean {
+        return try {
+            databaseRef.child(tableId).child("current_order").child("notes").setValue(notes).await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * Lắng nghe Realtime danh sách thực đơn món nước từ nhánh "menu_items" trên Firebase
+     */
+    fun listenToMenu(): Flow<List<MenuItem>> = callbackFlow {
+        // ĐÃ SỬA: Đổi "menu" thành "menu_items" cho khớp đúng với Firebase của bạn
+        val menuRef = FirebaseDatabase.getInstance().getReference("menu_items")
+
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val menuItems = mutableListOf<MenuItem>()
+                for (child in snapshot.children) {
+                    val item = child.getValue(MenuItem::class.java)
+                    if (item != null) {
+                        // KẾT HỢP ĐIỀU KIỆN: Chỉ lấy những món đang còn hàng (available)
+                        if (item.status == "available") {
+                            item.id = child.key ?: "" // Lấy ID (ITEM001, ITEM002...) từ Firebase
+                            menuItems.add(item)
+                        }
+                    }
+                }
+                trySend(menuItems).isSuccess
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
+            }
+        }
+
+        menuRef.addValueEventListener(listener)
+        awaitClose { menuRef.removeEventListener(listener) }
+    }
+
+    /**
+     * Cập nhật toàn bộ giỏ hàng (ActiveOrder) lên Firebase
+     */
+    suspend fun updateTableOrder(tableId: String, order: com.example.coffeeshopmobile.data.model.ActiveOrder?): Boolean {
+        return try {
+            databaseRef.child(tableId).child("current_order").setValue(order).await()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\data\repository\TableRepository.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.data.repository
+
+import com.example.coffeeshopmobile.base.BaseRepository
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.data.remote.TableRemoteDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import com.example.coffeeshopmobile.data.model.MenuItem
+class TableRepository : BaseRepository() {
+    private val remoteDataSource = TableRemoteDataSource()
+
+    /**
+     * Lấy danh sách bàn từ Remote và sắp xếp tăng dần theo tableNumber
+     */
+    fun getTables(): Flow<List<Table>> {
+        return remoteDataSource.listenToTables().map { tableList ->
+            tableList.sortedBy { it.tableNumber }
+        }
+    }
+
+    /**
+     * Gọi Remote để đổi trạng thái bàn
+     */
+    suspend fun updateTableStatus(tableId: String, newStatus: String): Boolean {
+        return remoteDataSource.updateTableStatus(tableId, newStatus)
+    }
+
+    /**
+     * Gọi lệnh gộp bàn xuống lớp remote
+     */
+    suspend fun mergeTable(currentTableId: String, targetTableNumber: Int): Boolean {
+        return remoteDataSource.mergeTable(currentTableId, targetTableNumber)
+    }
+
+    suspend fun unmergeTable(tableId: String): Boolean {
+        return remoteDataSource.unmergeTable(tableId)
+    }
+
+    suspend fun unmergeAllFromTarget(tablesToUnmerge: List<String>): Boolean {
+        return remoteDataSource.unmergeAllFromTarget(tablesToUnmerge)
+    }
+
+    suspend fun transferTable(originTable: Table, targetTable: Table, allTables: List<Table>): Boolean {
+        return remoteDataSource.transferTable(originTable, targetTable, allTables)
+    }
+
+    suspend fun updateTableNotes(tableId: String, notes: String): Boolean {
+        return remoteDataSource.updateTableNotes(tableId, notes)
+    }
+
+    /**
+     * Lấy danh sách thực đơn và tự động sắp xếp theo tên món nước
+     */
+    fun getMenu(): Flow<List<MenuItem>> {
+        return remoteDataSource.listenToMenu().map { menuList ->
+            menuList.sortedBy { it.name }
+        }
+    }
+
+    suspend fun updateTableOrder(tableId: String, order: com.example.coffeeshopmobile.data.model.ActiveOrder?): Boolean {
+        return remoteDataSource.updateTableOrder(tableId, order)
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\MainActivity.kt">
+<![CDATA[
+package com.example.coffeeshopmobile
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshopmobile.ui.screens.MergeTableScreen
+import com.example.coffeeshopmobile.ui.screens.TableDetailScreen
+import com.example.coffeeshopmobile.ui.screens.TableScreen
+import com.example.coffeeshopmobile.ui.screens.TransferTableScreen
+import com.example.coffeeshopmobile.ui.screens.TableNoteScreen
+import com.example.coffeeshopmobile.ui.screens.MenuScreen
+import com.example.coffeeshopmobile.ui.screens.CartScreen
+import com.example.coffeeshopmobile.ui.theme.CoffeeShopMobileTheme
+import com.example.coffeeshopmobile.viewmodel.TableViewModel
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            CoffeeShopMobileTheme {
+                val viewModel: TableViewModel = viewModel()
+                val tables by viewModel.tables.collectAsState()
+
+                var selectedTableId by remember { mutableStateOf<String?>(null) }
+                var isSelectingMerge by remember { mutableStateOf(false) }
+                var isSelectingTransfer by remember { mutableStateOf(false) }
+                var isEditingNotes by remember { mutableStateOf(false) }
+                var isSelectingMenu by remember { mutableStateOf(false) }
+                var isViewingCart by remember { mutableStateOf(false) }
+                val currentSelectedTable = tables.find { it.id == selectedTableId }
+
+                when {
+                    // MÀN HÌNH 1: Sơ đồ bàn ngoài cùng
+                    currentSelectedTable == null -> {
+                        TableScreen(
+                            viewModel = viewModel,
+                            onTableClick = { table -> selectedTableId = table.id }
+                        )
+                    }
+                    // MÀN HÌNH 3: Chọn bàn để Gộp
+                    isSelectingMerge -> {
+                        MergeTableScreen(
+                            currentTable = currentSelectedTable,
+                            viewModel = viewModel,
+                            onBackClick = { isSelectingMerge = false },
+                            onMergeSuccess = {
+                                isSelectingMerge = false
+                                selectedTableId = null
+                            }
+                        )
+                    }
+                    // MÀN HÌNH 4: Giao diện Chuyển bàn (2 Cột)
+                    isSelectingTransfer -> {
+                        TransferTableScreen(
+                            currentTable = currentSelectedTable,
+                            viewModel = viewModel,
+                            onBackClick = { isSelectingTransfer = false },
+                            onTransferSuccess = {
+                                isSelectingTransfer = false
+                                selectedTableId = null
+                            }
+                        )
+                    }
+                    // MÀN HÌNH 5: Giao diện Ghi chú dòng thời gian (Đặt lên đầu luồng menu để chặn bám)
+                    isEditingNotes -> {
+                        TableNoteScreen(
+                            table = currentSelectedTable,
+                            viewModel = viewModel,
+                            onBackClick = { isEditingNotes = false } // Khi tắt ghi chú, app tự rơi về màn hình giữ cờ bên dưới
+                        )
+                    }
+                    // MÀN HÌNH 7: Giao diện Giỏ hàng (Đứng trước Chọn món)
+                    isViewingCart -> {
+                        CartScreen(
+                            table = currentSelectedTable,
+                            viewModel = viewModel,
+                            onBackClick = { isViewingCart = false }, // Chỉ tắt giỏ hàng -> Tự trả về Chọn món vì cờ Menu vẫn bật
+                            onNoteClick = { isEditingNotes = true }, // Tiến thẳng sang Ghi chú, giữ nguyên cờ Giỏ hàng
+                            onServeSuccess = {
+                                // Khi nhấn PHỤC VỤ MÓN: Đóng toàn bộ luồng chọn nước, quay về chi tiết bàn 1
+                                isViewingCart = false
+                                isSelectingMenu = false
+                            }
+                        )
+                    }
+                    // MÀN HÌNH 6: Giao diện Chọn món
+                    isSelectingMenu -> {
+                        MenuScreen(
+                            table = currentSelectedTable,
+                            viewModel = viewModel,
+                            onBackClick = { isSelectingMenu = false },
+                            onCartClick = { isViewingCart = true } // Tiến lên Giỏ hàng, GIỮ NGUYÊN cờ Chọn món bằng true
+                        )
+                    }
+                    // MÀN HÌNH 2: Chức năng chi tiết tại bàn
+                    else -> {
+                        TableDetailScreen(
+                            table = currentSelectedTable,
+                            allTables = tables,
+                            viewModel = viewModel,
+                            onBackClick = { selectedTableId = null },
+                            onMergeClick = { isSelectingMerge = true },
+                            onTransferClick = { isSelectingTransfer = true },
+                            onNoteClick = { isEditingNotes = true },
+                            onMenuClick = { isSelectingMenu = true }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\screens\MenuScreen.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.screens
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
+import com.example.coffeeshopmobile.data.model.MenuItem
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.utils.formatPrice
+import com.example.coffeeshopmobile.viewmodel.TableViewModel
+
+@Composable
+fun MenuScreen(
+    table: Table,
+    onBackClick: () -> Unit,
+    onCartClick: () -> Unit,
+    viewModel: TableViewModel = viewModel() // <-- THÊM: Nhận bộ não xử lý vào đây
+) {
+    // ĐÃ ĐỔI: Lấy dữ liệu Realtime chạy từ Firebase về thay cho dữ liệu giả cũ
+    val menuItems by viewModel.menu.collectAsState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        // === 1. PHẦN HEADER (CỐ ĐỊNH PHÍA TRÊN) ===
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 24.dp)
+                .padding(top = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Trở về",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.Black
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = "Chọn món (BÀN ${table.tableNumber})",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.Black
+            )
+        }
+
+        // === 2. PHẦN DANH SÁCH MÓN (CUỘN ĐƯỢC) ===
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(menuItems) { item -> // Chạy vòng lặp danh sách nước thật từ Firebase
+                MenuItemRow(item = item, onAddClick = { viewModel.addMenuItemToCart(table, item) })
+            }
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+        }
+
+        // === 3. PHẦN BOTTOM BAR (NÚT XEM GIỎ HÀNG CỐ ĐỊNH ĐÁY) ===
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                // ĐÃ CHỈNH SỬA: Đẩy bottom lên hẳn 56.dp giúp nút bay cao, không bị dính vào vạch Home của điện thoại
+                .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 56.dp),
+            shape = RoundedCornerShape(50),
+            color = MaterialTheme.colorScheme.primary,
+            border = BorderStroke(3.dp, Color.Black)
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .clickable { onCartClick() }
+            ) {
+                Text(
+                    text = "Xem giỏ hàng",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.White
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MenuItemRow(item: MenuItem, onAddClick: () -> Unit) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp),
+        shape = RoundedCornerShape(16.dp),
+        color = Color(0xFFF5F5F5),
+        border = BorderStroke(1.dp, Color(0xFFE0E0E0))
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                model = item.imageUrl, // Link ảnh trực tiếp từ Supabase cấu hình trên Firebase
+                contentDescription = item.name,
+                modifier = Modifier
+                    .size(76.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.LightGray),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = item.name,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = item.price.formatPrice(),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            IconButton(
+                onClick = onAddClick,
+                modifier = Modifier
+                    .size(48.dp)
+                    .background(Color.Black, RoundedCornerShape(12.dp))
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Thêm món",
+                    tint = Color.White
+                )
+            }
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\screens\MergeTableScreen.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.screens
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.viewmodel.TableViewModel
+
+@Composable
+fun MergeTableScreen(
+    currentTable: Table,
+    onBackClick: () -> Unit,
+    onMergeSuccess: () -> Unit,
+    viewModel: TableViewModel = viewModel()
+) {
+    // Lắng nghe danh sách tất cả các bàn realtime từ Firebase
+    val tables by viewModel.tables.collectAsState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(horizontal = 24.dp)
+    ) {
+        // --- HEADING (Nút lùi & Tiêu đề Gộp) ---
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 40.dp, bottom = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Trở về",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.Black
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = "Gộp (BÀN ${currentTable.tableNumber})",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.Black
+            )
+        }
+
+        // --- DANH SÁCH BÀN ĐỂ CHỌN GỘP ---
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(tables) { table ->
+                val isSelf = table.id == currentTable.id
+
+                // Xác định màu nền theo đúng yêu cầu bài toán của bạn
+                val backgroundColor = when {
+                    isSelf -> Color(0xFFE0E0E0) // Bàn hiện tại: Màu xám
+                    table.status == "available" -> MaterialTheme.colorScheme.primary // Bàn trống: Màu nâu coffee chủ đạo
+                    else -> Color(0xFF81C784) // Bàn có khách: Màu xanh lá
+                }
+
+                // Cấu hình chữ hiển thị
+                val displayText = if (isSelf) {
+                    "BÀN ${table.tableNumber} (đang lựa chọn)"
+                } else {
+                    "BÀN ${table.tableNumber}"
+                }
+
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(72.dp)
+                        .clickable(enabled = !isSelf) {
+                            // Thực hiện lệnh gộp bàn lên Firebase
+                            viewModel.mergeTable(currentTable.id, table.tableNumber)
+                            // Kích hoạt hàm báo thành công để tự động đóng trang gộp về màn hình chính
+                            onMergeSuccess()
+                        },
+                    shape = RoundedCornerShape(50),
+                    color = backgroundColor,
+                    border = BorderStroke(3.dp, Color.Black)
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Text(
+                            text = displayText,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp,
+                            color = if (isSelf) Color.Gray else Color.Black
+                        )
+                    }
+                }
+            }
+            item { Spacer(modifier = Modifier.height(32.dp)) }
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\screens\TableDetailScreen.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.screens
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.viewmodel.TableViewModel
+
+@Composable
+fun TableDetailScreen(
+    table: Table,
+    allTables: List<Table>,
+    onBackClick: () -> Unit,
+    onMergeClick: () -> Unit,       // Mở trang gộp bàn
+    onTransferClick: () -> Unit,    // Mở trang chuyển bàn
+    onNoteClick: () -> Unit,        // Mở trang ghi chú
+    onMenuClick: () -> Unit,
+    viewModel: TableViewModel = viewModel()
+) {
+    // 1. Phân loại quan hệ bàn
+    val isMergedSource = table.status == "merged" // Mình là bàn phụ đi gộp (Vd: Bàn 1)
+    val isMergeTarget = allTables.any { it.status == "merged" && it.mergedWith == table.tableNumber } // Mình là bàn chính nhận gộp (Vd: Bàn 2)
+
+    val hasCustomer = table.status == "occupied" || (isMergeTarget && table.status == "occupied")
+    val hasOrder = table.currentOrder != null && table.currentOrder!!.items.isNotEmpty()
+
+    // 2. Logic đổi tên nút Gộp bàn
+    val (mergeButtonText, onMergeAction) = when {
+        isMergedSource -> Pair("Rời gộp") { viewModel.unmergeTable(table.id) }
+        isMergeTarget -> Pair("Rời gộp tất cả") { viewModel.unmergeAllFromTarget(table.tableNumber) }
+        else -> Pair("Gộp bàn") { onMergeClick() }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(horizontal = 24.dp)
+    ) {
+        // --- PHẦN HEADING ---
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 40.dp, bottom = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Trở về",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.Black
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = if (isMergedSource) "BÀN ${table.tableNumber} GỘP ${table.mergedWith}" else "BÀN SỐ ${table.tableNumber}",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.Black
+            )
+        }
+
+        // --- PHẦN CÁC NÚT CHỨC NĂNG CHẢY DỌC ---
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            ActionPillButton(
+                text = "Có khách",
+                enabled = table.status == "available" && !isMergedSource,
+                onClick = { viewModel.updateTableStatus(table.id, "occupied") }
+            )
+
+            ActionPillButton(
+                text = "Chọn nước",
+                enabled = hasCustomer && !hasOrder && !isMergedSource,
+                onClick = onMenuClick
+            )
+
+            ActionPillButton(
+                text = mergeButtonText,
+                onClick = onMergeAction
+            )
+
+            ActionPillButton(
+                text = "Chuyển bàn",
+                enabled = !isMergedSource,
+                onClick = onTransferClick
+            )
+
+            ActionPillButton(
+                text = "Gọi thêm",
+                enabled = hasOrder && !isMergedSource,
+                onClick = { /* TODO: Luồng gọi thêm nước */ }
+            )
+
+            ActionPillButton(
+                text = "Ghi chú",
+                enabled = table.status == "occupied" || isMergedSource || isMergeTarget,
+                onClick = onNoteClick
+            )
+
+            ActionPillButton(
+                text = "Hủy khách",
+                enabled = table.status == "occupied",
+                onClick = { viewModel.updateTableStatus(table.id, "available") }
+            )
+        }
+    }
+}
+
+/**
+ * 🌟 ĐÂY CHÍNH LÀ PHẦN BỊ THIẾU KHIẾN APP BÁO LỖI ĐỎ
+ * Thành phần nút bấm viên thuốc viền đen dùng chung
+ */
+@Composable
+fun ActionPillButton(
+    text: String,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    val backgroundColor = if (enabled) MaterialTheme.colorScheme.primary else Color(0xFFE0E0E0)
+    val textColor = if (enabled) Color.White else Color.Gray
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(72.dp)
+            .clickable(enabled = enabled) { onClick() },
+        shape = RoundedCornerShape(50),
+        color = backgroundColor,
+        border = BorderStroke(3.dp, Color.Black)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(
+                text = text,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                color = textColor
+            )
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\screens\TableNoteScreen.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.screens
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.viewmodel.TableViewModel
+
+@Composable
+fun TableNoteScreen(
+    table: Table,
+    onBackClick: () -> Unit,
+    viewModel: TableViewModel = viewModel() // Đã gỡ bỏ tham số onUpdateSuccess không dùng đến để hết cảnh báo vàng
+) {
+    // Lấy chuỗi ghi chú từ Firebase
+    val oldNotesHistory = table.currentOrder?.notes ?: ""
+    var noteInput by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(horizontal = 24.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        // --- HEADING (Nút lùi & Tiêu đề) ---
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 40.dp, bottom = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Trở về",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.Black
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = "Ghi chú (BÀN ${table.tableNumber})",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.Black
+            )
+        }
+
+        // --- TEXTAREA: Ô NHẬP LIỆU NHIỀU DÒNG ---
+        OutlinedTextField(
+            value = noteInput,
+            onValueChange = { noteInput = it },
+            placeholder = { Text("Nhập thông tin ghi chú ở đây...", color = Color.Gray) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
+            )
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // --- NÚT CẬP NHẬT ---
+        ActionPillButton(
+            text = "Cập nhật",
+            enabled = noteInput.isNotBlank(),
+            onClick = {
+                viewModel.addTableNote(table.id, noteInput, oldNotesHistory)
+                noteInput = ""
+            }
+        )
+
+        // --- HỘP LỊCH SỬ GHI CHÚ NỀN XANH LỤC NHẠT ---
+        if (oldNotesHistory.isNotBlank()) {
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Hàng tiêu đề lịch sử kết hợp bộ đôi nút bên phải
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Lịch sử ghi chú:",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+
+                // Cụm nút bấm Chỉnh sửa & Xóa nằm sát cạnh nhau
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // 1. NÚT CHỈNH SỬA: Nền Coffee chủ đạo, chữ trắng
+                    Button(
+                        onClick = {
+                            val timeRegex = Regex("\\(\\d{2}:\\d{2}\\)\\s*")
+                            val cleanedText = oldNotesHistory.replace(timeRegex, "")
+                            noteInput = cleanedText
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text("Chỉnh sửa", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                    }
+
+                    // 2. NÚT XÓA LỊCH SỬ: Nền đỏ rực, chữ trắng
+                    Button(
+                        onClick = {
+                            viewModel.clearTableNotes(table.id)
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFDC3545)),
+                        contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text("Xoá lịch sử", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                color = Color(0xFFE8F5E9),
+                border = BorderStroke(1.dp, Color(0xFFC8E6C9))
+            ) {
+                Text(
+                    text = oldNotesHistory,
+                    fontSize = 20.sp,
+                    color = Color(0xFF2E7D32),
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(16.dp),
+                    lineHeight = 28.sp
+                )
+            }
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\screens\TableScreen.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.screens
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.viewmodel.TableViewModel
+
+@Composable
+fun TableScreen(
+    viewModel: TableViewModel = viewModel(),
+    onTableClick: (Table) -> Unit
+) {
+    val tables by viewModel.tables.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Danh sách bàn",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(top = 40.dp, bottom = 32.dp)
+        )
+
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.padding(top = 50.dp),
+                color = MaterialTheme.colorScheme.primary
+            )
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(tables) { table ->
+                    // ĐẶC BIỆT: Nếu bàn này đang gộp, tìm xem bàn đích (Vd: Bàn 2) trạng thái là gì
+                    val targetTable = if (table.status == "merged") tables.find { it.tableNumber == table.mergedWith } else null
+
+                    TableItem(
+                        table = table,
+                        targetTable = targetTable, // Truyền bàn đích vào để phối màu
+                        onClick = { onTableClick(table) }
+                    )
+                }
+                item { Spacer(modifier = Modifier.height(32.dp)) }
+            }
+        }
+    }
+}
+
+@Composable
+fun TableItem(table: Table, targetTable: Table?, onClick: () -> Unit) {
+    // Trạng thái thực tế dùng để tô màu nền (Nếu mình gộp vào bàn khác, lấy màu của bàn đó)
+    val effectiveStatus = if (table.status == "merged") targetTable?.status ?: "available" else table.status
+
+    val backgroundColor = when (effectiveStatus) {
+        "occupied" -> Color(0xFF81C784) // Có khách -> Xanh lá
+        else -> Color(0xFFE0E0E0) // Trống -> Xám nền
+    }
+
+    val statusText = when (table.status) {
+        "occupied" -> " có khách"
+        "merged" -> " đang gộp ${table.mergedWith ?: ""}"
+        else -> ""
+    }
+
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(72.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(50),
+        color = backgroundColor,
+        border = BorderStroke(3.dp, Color.Black)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp)) {
+                        append("BÀN ${table.tableNumber}")
+                    }
+                    if (statusText.isNotEmpty()) {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Normal, fontSize = 20.sp)) {
+                            append(statusText)
+                        }
+                    }
+                },
+                color = Color.Black
+            )
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\screens\TransferTableScreen.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.screens
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.viewmodel.TableViewModel
+
+@Composable
+fun TransferTableScreen(
+    currentTable: Table,
+    onBackClick: () -> Unit,
+    onTransferSuccess: () -> Unit,
+    viewModel: TableViewModel = viewModel()
+) {
+    val tables by viewModel.tables.collectAsState()
+
+    // Biến lưu ID của bàn được chọn làm bàn gốc dời đi (Nút sẽ chuyển sang Xanh nước biển)
+    var selectedOriginTableId by remember { mutableStateOf<String?>(null) }
+
+    // Thuật toán tìm số hiệu bàn chính của cụm gộp hiện tại
+    val currentGroupMainNumber = if (currentTable.status == "merged") currentTable.mergedWith ?: 0 else currentTable.tableNumber
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(horizontal = 24.dp)
+    ) {
+        // --- HEADING ---
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 40.dp, bottom = 32.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Trở về",
+                    modifier = Modifier.size(32.dp),
+                    tint = Color.Black
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = "Chuyển bàn",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.Black
+            )
+        }
+
+        // --- DANH SÁCH 2 CỘT SONG SONG ---
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(tables) { table ->
+                // Kiểm tra xem bàn này có thuộc cụm gộp/bàn hiện tại không
+                val isInGroup = table.tableNumber == currentGroupMainNumber || (table.status == "merged" && table.mergedWith == currentGroupMainNumber)
+                val isSelectedOrigin = selectedOriginTableId == table.id
+
+                // Quyết định màu sắc cho Nút Đổi (Cột 2) theo đúng yêu cầu
+                val changeButtonColor = when {
+                    isSelectedOrigin -> Color(0xFF03A9F4) // Được chọn dời đi: Xanh nước biển
+                    isInGroup -> Color(0xFFFF9800)        // Thuộc cụm hiện tại: Màu Cam
+                    else -> Color(0xFFE0E0E0)              // Các bàn khác: Màu Xám nền
+                }
+
+                // Quyết định màu sắc nền hiển thị thông tin bàn (Cột 1 - Đồng bộ trang gộp)
+                val targetTableOfMerged = if (table.status == "merged") tables.find { it.tableNumber == table.mergedWith } else null
+                val effectiveStatus = if (table.status == "merged") targetTableOfMerged?.status ?: "available" else table.status
+                val tableBackgroundColor = when (effectiveStatus) {
+                    "occupied" -> Color(0xFF81C784) // Có khách: Xanh lá
+                    else -> Color(0xFFE0E0E0)       // Trống: Xám
+                }
+
+                // Chữ hiển thị tên bàn
+                val tableText = when (table.status) {
+                    "merged" -> "BÀN ${table.tableNumber} đang gộp ${table.mergedWith}"
+                    else -> "BÀN ${table.tableNumber}"
+                }
+
+                // Vẽ 1 hàng có 2 cột bằng cấu trúc Row sạch sẽ
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    // CỘT 1: Ô hiển thị thông tin bàn (Chiếm 70% chiều ngang)
+                    Surface(
+                        modifier = Modifier.weight(0.7f).height(72.dp),
+                        shape = RoundedCornerShape(50),
+                        color = tableBackgroundColor,
+                        border = BorderStroke(3.dp, Color.Black)
+                    ) {
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                            Text(text = tableText, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = Color.Black)
+                        }
+                    }
+
+                    // CỘT 2: Nút nhỏ mang tên "Đổi" (Chiếm 30% chiều ngang)
+                    // Điều kiện bấm: Thuộc nhóm màu Cam HOẶC (Đã chọn bàn đi VÀ bàn đích phải trống hoàn toàn)
+                    val isClickable = isInGroup || (selectedOriginTableId != null && table.status == "available")
+
+                    Surface(
+                        modifier = Modifier
+                            .weight(0.3f)
+                            .height(72.dp)
+                            .clickable(enabled = isClickable) {
+                                if (isInGroup) {
+                                    // Click nút Cam -> chuyển thành Xanh nước biển
+                                    selectedOriginTableId = table.id
+                                } else {
+                                    // Click nút Xám của bàn trống khi đã chọn gốc -> Thực thi hoán đổi dữ liệu
+                                    val originTable = tables.find { it.id == selectedOriginTableId }
+                                    if (originTable != null) {
+                                        viewModel.transferTable(originTable, table, tables)
+                                        onTransferSuccess() // Tự đóng trang chuyển bàn
+                                    }
+                                }
+                            },
+                        shape = RoundedCornerShape(50),
+                        color = changeButtonColor,
+                        border = BorderStroke(3.dp, Color.Black)
+                    ) {
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                            Text(
+                                text = "Đổi",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp,
+                                color = if (isClickable) Color.Black else Color.Gray
+                            )
+                        }
+                    }
+                }
+            }
+            item { Spacer(modifier = Modifier.height(32.dp)) }
+        }
+    }
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\theme\Color.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+// Màu chủ đạo từ Web của bạn
+val CoffeePrimary = Color(0xFFD4A574) // Nâu nhạt/Cam đất
+val CoffeeDark = Color(0xFF8D6E63)    // Nâu đậm
+val BackgroundLight = Color(0xFFF8F9FA) // Màu nền sáng
+val TextPrimary = Color(0xFF333333)   // Màu chữ đen xám
+
+// Màu trạng thái
+val StatusAvailable = Color(0xFF81C784) // Xanh lá (Còn hàng / Bàn trống)
+val StatusUnavailable = Color(0xFFE0E0E0) // Xám (Hết hàng / Bàn trống)
+val StatusError = Color(0xFFDC3545)     // Đỏ (Hủy / Lỗi)
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\theme\Theme.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.theme
+
+import android.app.Activity
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+
+// Giữ nguyên thiết lập màu chủ đạo của quán
+private val LightColorScheme = lightColorScheme(
+    primary = CoffeePrimary,
+    secondary = CoffeeDark,
+    background = BackgroundLight,
+    surface = Color.White,
+    onPrimary = Color.White,
+    onBackground = TextPrimary,
+    onSurface = TextPrimary
+)
+
+@Composable
+fun CoffeeShopMobileTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = false, // Tắt màu động (Android 12+) để không bị mất màu Nâu cà phê
+    content: @Composable () -> Unit
+) {
+    // 1. Ép toàn bộ App dùng Light Theme (Giao diện sáng) cho dễ nhìn ngoài trời
+    val colorScheme = LightColorScheme
+
+    // 2. Đổi màu thanh trạng thái (Status Bar) phía trên cùng của điện thoại
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb() // Đổi thành màu CoffeePrimary
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
+        }
+    }
+
+    // 3. Áp dụng Theme
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography, // Lấy từ file Type.kt
+        content = content
+    )
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\ui\theme\Type.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.ui.theme
+
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+
+// Định nghĩa các kiểu chữ dùng chung cho toàn bộ App
+val Typography = Typography(
+    // 1. Chữ nội dung bình thường (Mô tả, chữ thường)
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
+    ),
+
+    // 2. Chữ cho các Tiêu đề lớn (Ví dụ: Chữ "Danh sách bàn" ở đầu trang)
+    titleLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 32.sp,
+        lineHeight = 40.sp,
+        letterSpacing = 0.sp
+    ),
+
+    // 3. Chữ cho các Tiêu đề vừa (Ví dụ: Chữ "BÀN 1" trong các ô vuông)
+    titleMedium = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+        letterSpacing = 0.sp
+    ),
+
+    // 4. Chữ cho các Nút bấm (Button)
+    labelLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.1.sp
+    ),
+
+    // 5. Chữ chú thích nhỏ (Ví dụ: Chữ "có khách" hoặc "đang gộp 1")
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.2.sp
+    )
+)
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\utils\Extensions.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.utils
+
+import java.text.NumberFormat
+import java.util.*
+
+/**
+ * Định dạng giá tiền VND
+ * Ví dụ: 50000.0 -> "50.000 ₫"
+ */
+fun Double.formatPrice(): String {
+    val formatter = NumberFormat.getNumberInstance(Locale("vi", "VN"))
+    return "${formatter.format(this)} ₫"
+}
+
+fun Int.formatPrice(): String {
+    return this.toDouble().formatPrice()
+}
+
+// Các hàm check validate chuỗi rất tốt cho form đăng nhập sau này
+fun String.isValidEmail(): Boolean = this.matches(Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"))
+fun String.isValidPhone(): Boolean = this.length >= 10 && this.all { it.isDigit() }
+fun String.isValidPassword(): Boolean = this.length >= 6
+fun String.cleanInput(): String = this.trim().replace(Regex("\\s+"), " ")
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\utils\Result.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.utils
+
+/**
+ * Sealed class Result - Wrapper class cho async operations
+ * Giúp ViewModel nhận biết chính xác trạng thái từ Repository
+ */
+sealed class Result<out T> {
+    data class Success<out T>(val data: T) : Result<T>()
+    data class Error(val exception: Exception) : Result<Nothing>()
+    object Loading : Result<Nothing>()
+}
+]]>
+</file>
+<file name="app\src\main\java\com\example\coffeeshopmobile\viewmodel\TableViewModel.kt">
+<![CDATA[
+package com.example.coffeeshopmobile.viewmodel
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.coffeeshopmobile.data.model.Table
+import com.example.coffeeshopmobile.data.repository.TableRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
+import com.example.coffeeshopmobile.data.model.MenuItem
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+class TableViewModel : ViewModel() {
+    private val repository = TableRepository()
+
+    // Danh sách bàn
+    private val _tables = MutableStateFlow<List<Table>>(emptyList())
+    val tables: StateFlow<List<Table>> = _tables.asStateFlow()
+
+    // Danh sách thực đơn nước uống Realtime
+    private val _menu = MutableStateFlow<List<MenuItem>>(emptyList())
+    val menu: StateFlow<List<MenuItem>> = _menu.asStateFlow()
+
+    // Trạng thái Loading (Vòng xoay chờ)
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    init {
+        // Vừa mở màn hình lên là gọi Firebase lấy dữ liệu Bàn và Menu luôn
+        fetchTables()
+        fetchMenu()
+    }
+
+    private fun fetchTables() {
+        viewModelScope.launch {
+            repository.getTables()
+                .catch {
+                    _isLoading.value = false
+                }
+                .collect { tableList ->
+                    _tables.value = tableList
+                    _isLoading.value = false
+                }
+        }
+    }
+
+    private fun fetchMenu() {
+        viewModelScope.launch {
+            repository.getMenu()
+                .catch { e -> e.printStackTrace() }
+                .collect { menuList ->
+                    _menu.value = menuList
+                }
+        }
+    }
+
+    /**
+     * Nhận lệnh từ Giao diện và đẩy xuống Repository
+     */
+    fun updateTableStatus(tableId: String, newStatus: String) {
+        viewModelScope.launch {
+            repository.updateTableStatus(tableId, newStatus)
+        }
+    }
+
+    /**
+     * Nhận lệnh gộp bàn từ UI và xử lý bất đồng bộ
+     */
+    fun mergeTable(currentTableId: String, targetTableNumber: Int) {
+        viewModelScope.launch {
+            repository.mergeTable(currentTableId, targetTableNumber)
+        }
+    }
+
+    /**
+     * Rời gộp bàn
+     */
+    fun unmergeTable(tableId: String) {
+        viewModelScope.launch {
+            repository.unmergeTable(tableId)
+        }
+    }
+
+    /**
+     * Bỏ gộp tất cả các bàn phụ đang chỉ vào bàn chính này
+     */
+    fun unmergeAllFromTarget(targetTableNumber: Int) {
+        viewModelScope.launch {
+            val idsToUnmerge = _tables.value
+                .filter { it.status == "merged" && it.mergedWith == targetTableNumber }
+                .map { it.id }
+            repository.unmergeAllFromTarget(idsToUnmerge)
+        }
+    }
+
+    /**
+     * Chuyển bàn
+     */
+    fun transferTable(originTable: Table, targetTable: Table, allTables: List<Table>) {
+        viewModelScope.launch {
+            repository.transferTable(originTable, targetTable, allTables)
+        }
+    }
+
+    /**
+     * Xử lý đóng dấu thời gian và cộng dồn ghi chú (Mới xếp trên Cũ)
+     */
+    fun addTableNote(tableId: String, newNoteText: String, oldNotes: String) {
+        if (newNoteText.isBlank()) return
+
+        viewModelScope.launch {
+            // ĐÃ SỬA: Dùng SimpleDateFormat để tương thích với mọi phiên bản Android
+            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val currentTime = sdf.format(Date())
+            val formattedNewNote = "($currentTime) $newNoteText"
+
+            // Nối chuỗi: Đẩy ghi chú mới lên TRÊN ghi chú cũ
+            val updatedNotes = if (oldNotes.isBlank()) {
+                formattedNewNote
+            } else {
+                "$formattedNewNote\n$oldNotes"
+            }
+
+            // Đẩy lên Firebase
+            repository.updateTableNotes(tableId, updatedNotes)
+        }
+    }
+
+    /**
+     * Xóa sạch toàn bộ lịch sử ghi chú của bàn trên Firebase
+     */
+    fun clearTableNotes(tableId: String) {
+        viewModelScope.launch {
+            repository.updateTableNotes(tableId, "")
+        }
+    }
+
+    /**
+     * Thêm 1 món vào giỏ hàng (Nhấn dấu + ở Menu)
+     * Có quét kiểm tra: Nếu món đã có thì chỉ cộng dồn số lượng
+     */
+    fun addMenuItemToCart(table: Table, menuItem: MenuItem) {
+        val currentOrder = table.currentOrder ?: com.example.coffeeshopmobile.data.model.ActiveOrder()
+        val items = currentOrder.items.toMutableList()
+
+        val existingItemIndex = items.indexOfFirst { it.itemId == menuItem.id }
+        if (existingItemIndex != -1) {
+            // Món đã có -> Tăng số lượng lên 1
+            val existing = items[existingItemIndex]
+            items[existingItemIndex] = existing.copy(quantity = existing.quantity + 1)
+        } else {
+            // Món chưa có -> Thêm dòng mới
+            items.add(
+                com.example.coffeeshopmobile.data.model.OrderItem(
+                    itemId = menuItem.id,
+                    itemName = menuItem.name,
+                    price = menuItem.price,
+                    quantity = 1,
+                    served = false
+                )
+            )
+        }
+
+        val updatedOrder = currentOrder.copy(items = items)
+        viewModelScope.launch {
+            repository.updateTableOrder(table.id, updatedOrder)
+        }
+    }
+
+    /**
+     * Tăng/Giảm số lượng trực tiếp trong giỏ hàng
+     */
+    fun updateCartItemQuantity(table: Table, itemId: String, delta: Int) {
+        val currentOrder = table.currentOrder ?: return
+        val items = currentOrder.items.toMutableList()
+
+        val index = items.indexOfFirst { it.itemId == itemId }
+        if (index != -1) {
+            val existing = items[index]
+            val newQty = existing.quantity + delta
+            if (newQty <= 0) {
+                items.removeAt(index) // Nếu giảm về 0 thì xóa món đó khỏi giỏ
+            } else {
+                items[index] = existing.copy(quantity = newQty)
+            }
+
+            // Cập nhật lại Firebase
+            viewModelScope.launch {
+                repository.updateTableOrder(table.id, currentOrder.copy(items = items))
+            }
+        }
+    }
+}
+]]>
+</file>
+</files>

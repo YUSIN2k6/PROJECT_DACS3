@@ -1,0 +1,21 @@
+%%{init: {
+  'fontFamily': 'Arial, Helvetica, sans-serif',
+  'theme': 'base',
+  'themeVariables': {
+    'actorBkg': '#ffffff',
+    'actorBorder': '#000000',
+    'actorTextColor': '#000000',
+    'participantBkg': '#ffffff',
+    'participantBorder': '#000000',
+    'participantTextColor': '#000000',
+    'textColor': '#000000',
+    'messageLineColor': '#000000',
+    'messageTextColor': '#000000'
+  }
+}}%%
+
+
+// activiti
+%%{init: {'fontFamily': 'Arial, Helvetica, sans-serif'}}%%
+graph TD
+classDef default fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000;

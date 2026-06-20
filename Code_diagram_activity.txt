@@ -1,0 +1,339 @@
+%%{init: {'fontFamily': 'Arial, Helvetica, sans-serif'}}%%
+
+---
+title: UC-01: Đăng nhập hệ thống
+---
+graph TD
+    A[Mở ứng dụng/Web] --> B{Actor}
+    B -->|Quản trị viên/Thu ngân| C[Nhập thông tin đăng nhập: Tên đăng nhập, Mật khẩu]
+    B -->|Phục vụ| D[Nhập thông tin đăng nhập: Tên đăng nhập, Mật khẩu]
+    C --> E[Nhấn nút Đăng nhập]
+    D --> E
+    E --> F{Hệ thống kiểm tra thông tin}
+    F -->|Thông tin chính xác| G{Vai trò}
+    F -->|Thông tin không chính xác| H[Hiển thị thông báo lỗi]
+    H --> C
+    G -->|Quản trị viên| I[Chuyển đến trang Bảng điều khiển]
+    G -->|Thu ngân| J[Chuyển đến trang Sơ đồ bàn]
+    G -->|Phục vụ| K[Chuyển đến màn hình Sơ đồ bàn]
+
+========================================
+
+---
+title: UC-02: Đăng xuất hệ thống (Web)
+---
+graph TD
+    A[Đang ở giao diện chính hệ thống] --> B[Nhấn nút Đăng xuất]
+    B --> C{Hệ thống xử lý đăng xuất}
+    C --> D[Chuyển đến trang Đăng nhập]
+
+========================================
+
+---
+title: UC-03: Xem báo cáo thống kê (Web - Quản trị viên)
+---
+graph TD
+    A[Mở trang Bảng điều khiển] --> B{Hệ thống tải dữ liệu}
+    B -->|Thành công| C[Hiển thị báo cáo: Doanh thu, đơn hàng, món bán chạy]
+    B -->|Lỗi| D[Hiển thị thông báo lỗi]
+
+========================================
+
+---
+title: UC-04: Quản lý nhân sự (Web - Quản trị viên)
+---
+graph TD
+    A[Mở trang Quản lý nhân sự] --> B{Chọn thao tác}
+    B -->|Thêm nhân viên| C[Nhấn nút Thêm nhân viên]
+    C --> D[Nhập thông tin nhân viên: Họ tên, Email, SĐT, Vai trò, Tên đăng nhập, Mật khẩu]
+    D --> E[Nhấn nút Lưu]
+    E --> F{Hệ thống kiểm tra thông tin}
+    F -->|Hợp lệ| G[Lưu và cập nhật danh sách]
+    F -->|Không hợp lệ| H[Hiển thị thông báo lỗi]
+    H --> D
+    B -->|Sửa thông tin| I[Nhấn nút Sửa trên hàng nhân viên]
+    I --> J[Sửa thông tin]
+    J --> E
+    B -->|Xóa nhân viên| K[Nhấn nút Xóa trên hàng nhân viên]
+    K --> L[Hiển thị hộp thoại xác nhận]
+    L --> M{Nhấn Xác nhận?}
+    M -->|Có| G
+    M -->|Không| A
+
+========================================
+
+---
+title: UC-05: Quản lý thực đơn (Web - Quản trị viên)
+---
+graph TD
+    A[Mở trang Quản lý thực đơn] --> B{Chọn thao tác}
+    B -->|Thêm món| C[Nhấn nút Thêm món ăn]
+    C --> D[Nhập thông tin món ăn: Tên, Giá, Danh mục, Ảnh, Trạng thái]
+    D --> E[Nhấn nút Lưu]
+    E --> F{Hệ thống kiểm tra thông tin}
+    F -->|Hợp lệ| G[Lưu và cập nhật danh sách]
+    F -->|Không hợp lệ| H[Hiển thị thông báo lỗi]
+    H --> D
+    B -->|Sửa món| I[Nhấn nút Sửa trên hàng món ăn]
+    I --> J[Sửa thông tin]
+    J --> E
+    B -->|Xóa món| K[Nhấn nút Xóa trên hàng món ăn]
+    K --> L[Hiển thị hộp thoại xác nhận]
+    L --> M{Nhấn Xác nhận?}
+    M -->|Có| G
+    M -->|Không| A
+
+========================================
+
+---
+title: UC-06: Quản lý thiết lập bàn (Web - Quản trị viên)
+---
+graph TD
+    A[Mở trang Quản lý thiết lập bàn] --> B{Chọn thao tác}
+    B -->|Thêm bàn| C[Nhấn nút Thêm bàn]
+    C --> D{Hệ thống xử lý}
+    D -->|Thành công| E[Tạo bàn mới với số tự tăng]
+    D -->|Lỗi| F[Hiển thị thông báo lỗi]
+    B -->|Xóa bàn| G[Nhập số bàn cần xóa]
+    G --> H[Nhấn nút Xóa]
+    H --> I[Hiển thị hộp thoại xác nhận]
+    I --> J{Nhấn Xác nhận?}
+    J -->|Có| K{Hệ thống tìm bàn}
+    K -->|Tìm thấy| L[Xóa bàn và cập nhật danh sách]
+    K -->|Không tìm thấy| M[Hiển thị thông báo lỗi]
+    J -->|Không| A
+
+========================================
+
+---
+title: UC-07: Quản lý sơ đồ bàn (Web - Thu ngân)
+---
+graph TD
+    A[Mở trang Sơ đồ bàn] --> B{Chọn bàn cần thao tác}
+    B --> C{Chọn thao tác}
+    C -->|Đổi bàn| D[Nhấn nút Đổi bàn]
+    D --> E[Hiển thị modal chọn bàn trống]
+    E --> F[Chọn bàn và nhấn Xác nhận Đổi]
+    F --> G{Hệ thống kiểm tra}
+    G -->|Bàn trống| H[Di chuyển đơn hàng và cập nhật trạng thái]
+    G -->|Bàn không trống| I[Hiển thị thông báo lỗi]
+    C -->|Gộp bàn| J[Nhấn nút Gộp]
+    J --> K[Hiển thị modal chọn bàn có khách]
+    K --> L[Chọn bàn và nhấn Xác nhận Gộp]
+    L --> M{Hệ thống kiểm tra}
+    M -->|Bàn có khách| N[Gộp đơn hàng và cập nhật trạng thái]
+    M -->|Bàn trống| O[Hiển thị thông báo lỗi]
+    C -->|Hủy khách| P[Nhấn nút Hủy khách]
+    P --> Q[Cập nhật trạng thái bàn thành Trống và xóa đơn hàng]
+
+========================================
+
+---
+title: UC-08: Gọi nước cho bàn (Web - Thu ngân)
+---
+graph TD
+    A[Mở trang Đơn mang về] --> B{Chọn loại hình đơn}
+    B -->|Thêm món cho bàn| C[Chọn radio Thêm món cho bàn]
+    C --> D[Chọn bàn từ dropdown]
+    B -->|Đơn mang về| E[Giữ radio Mang về / Khác]
+    D --> F[Nhấn các món ăn để thêm vào giỏ hàng]
+    E --> F
+    F --> G{Điều chỉnh đơn nước?}
+    G -->|Có| H[Thực hiện UC-09: Điều chỉnh đơn nước]
+    G -->|Không| I[Nhấn nút Yêu cầu pha chế/Thanh toán]
+    H --> I
+    I --> J{Loại đơn}
+    J -->|Thêm món cho bàn| K[Gộp món vào đơn hàng hiện tại và cập nhật trạng thái bàn thành Đang chuẩn bị]
+    J -->|Đơn mang về| L[Tạo hóa đơn và lưu vào lịch sử]
+    K --> M[Hiển thị thông báo thành công]
+    L --> M
+
+========================================
+
+---
+title: UC-09: Điều chỉnh đơn nước (Web - Thu ngân)
+---
+graph TD
+    A[Đang ở trang Đơn mang về, giỏ hàng có món] --> B{Chọn thao tác}
+    B -->|Tăng số lượng| C[Nhấn món ăn thêm lần nữa]
+    C --> D[Tăng số lượng và cập nhật tổng tiền]
+    B -->|Xóa món| E[Nhấn nút Bỏ (biểu tượng x) trên hàng món]
+    E --> F[Xóa món khỏi giỏ hàng và cập nhật tổng tiền]
+
+========================================
+
+---
+title: UC-10: Theo dõi trạng thái phục vụ (Web - Thu ngân)
+---
+graph TD
+    A[Mở trang Sơ đồ bàn] --> B[Nhấn chọn bàn có đơn hàng]
+    B --> C[Hiển thị sidebar chi tiết bàn]
+    C --> D[Xem danh sách món ăn và trạng thái: Chưa phục vụ / Đã phục vụ]
+    D --> E[Nhấn nút Đã phục vụ (nếu cần) trên món ăn]
+    E --> F[Cập nhật trạng thái món ăn thành Đã phục vụ]
+    F --> G{Nếu tất cả món đã phục vụ?}
+    G -->|Có| H[Cập nhật trạng thái bàn thành Đã phục vụ]
+
+========================================
+
+---
+title: UC-12: Thanh toán đơn mang về (Web - Thu ngân)
+---
+graph TD
+    A[Mở trang Đơn mang về] --> B[Chọn radio Mang về / Khác]
+    B --> C[Nhấn các món ăn để thêm vào giỏ hàng]
+    C --> D{Điều chỉnh đơn nước?}
+    D -->|Có| E[Thực hiện UC-09: Điều chỉnh đơn nước]
+    D -->|Không| F{Giỏ hàng trống?}
+    E --> F
+    F -->|Có| G[Hiển thị thông báo lỗi]
+    F -->|Không| H[Nhấn nút Thanh toán]
+    H --> I[Tạo hóa đơn và lưu vào lịch sử]
+    I --> J[Xóa giỏ hàng và hiển thị thông báo thành công]
+    F -.->|Hủy đơn| K[Nhấn nút Hủy đơn]
+    K --> L[Hiển thị hộp thoại xác nhận]
+    L --> M{Nhấn Xác nhận?}
+    M -->|Có| N[Xóa toàn bộ giỏ hàng]
+    M -->|Không| A
+
+========================================
+
+---
+title: UC-13: Thanh toán hóa đơn (Web - Thu ngân)
+---
+graph TD
+    A[Mở trang Thanh toán] --> B{Chọn bàn}
+    B -->|Chọn bàn từ dropdown| C[Hiển thị chi tiết hóa đơn của bàn]
+    B -->|Chuyển từ trang Sơ đồ bàn| C
+    C --> D{Điều chỉnh món?}
+    D -->|Có| E[Nhấn +/- để thay đổi số lượng hoặc xóa món]
+    D -->|Không| F[Chọn tình trạng và nhấn nút Thanh toán]
+    E --> G[Cập nhật tổng tiền]
+    G --> F
+    F --> H[Hiển thị hộp thoại xác nhận]
+    H --> I{Nhấn Xác nhận?}
+    I -->|Có| J{Lưu hóa đơn}
+    J -->|Thành công| K[Cập nhật trạng thái bàn thành Trống]
+    K --> L[Xóa đơn hàng hiện tại và hiển thị thông báo thành công]
+    L --> M[Quay về trang Sơ đồ bàn]
+    I -->|Không| C
+
+========================================
+
+---
+title: UC-14: Điều chỉnh kho (Web - Thu ngân)
+---
+graph TD
+    A[Mở trang Điều chỉnh kho] --> B[Chọn món từ dropdown Chọn nước]
+    B --> C[Chọn trạng thái mới: Còn hàng / Hết hàng]
+    C --> D[Nhấn nút Cập nhật]
+    D --> E{Hệ thống kiểm tra}
+    E -->|Đủ thông tin| F[Cập nhật trạng thái và làm mới trang]
+    E -->|Thiếu thông tin| G[Hiển thị thông báo lỗi]
+
+========================================
+
+---
+title: UC-15: Xem lịch sử giao dịch (Web - Quản trị viên & Thu ngân)
+---
+graph TD
+    A[Mở trang Lịch sử] --> B{Xem danh sách hóa đơn}
+    B --> C{(Tùy chọn) Tìm kiếm/Lọc hóa đơn}
+    C --> D[Hiển thị kết quả tìm kiếm/lọc]
+    B --> E[Nhấn nút Xem trên hàng hóa đơn]
+    E --> F[Hiển thị thông tin chi tiết hóa đơn]
+    F --> G[Nhấn nút Xem chi tiết]
+    G --> H[Mở modal hiển thị danh sách món trong hóa đơn]
+    F -->|Chỉ Thu ngân| I[Nhấn nút In lại hoá đơn]
+    I --> J[Mở cửa sổ in và hiển thị nội dung hóa đơn]
+    F -->|Chỉ Quản trị viên| K[Chọn khoảng thời gian từ dropdown Xuất theo thời gian]
+    K --> L[Nhấn nút Xuất Excel]
+    L --> M[Tải xuống file Excel]
+
+========================================
+
+---
+title: UC-01: Đăng nhập hệ thống (Mobile - Phục vụ)
+---
+graph TD
+    A[Mở ứng dụng] --> B[Nhập thông tin đăng nhập: Tên đăng nhập, Mật khẩu]
+    B --> C[Nhấn nút Đăng nhập]
+    C --> D{Hệ thống kiểm tra thông tin}
+    D -->|Thông tin chính xác| E[Chuyển đến màn hình Sơ đồ bàn]
+    D -->|Thông tin không chính xác| F[Hiển thị thông báo lỗi]
+    F --> B
+
+========================================
+
+---
+title: UC-07: Quản lý sơ đồ bàn (Mobile - Phục vụ)
+---
+graph TD
+    A[Mở màn hình Sơ đồ bàn] --> B[Nhấn vào bàn cần thao tác]
+    B --> C[Mở màn hình Chi tiết bàn]
+    C --> D{Chọn thao tác}
+    D -->|Đánh dấu Có khách| E[Nhấn nút Có khách]
+    E --> F[Cập nhật trạng thái bàn thành Có khách]
+    D -->|Gộp bàn| G[Nhấn nút Gộp bàn]
+    G --> H[Chọn bàn để gộp]
+    H --> I[Cập nhật trạng thái và quay về Chi tiết bàn]
+    D -->|Rời gộp| J[Nhấn nút Rời gộp / Rời gộp tất cả]
+    J --> K[Cập nhật trạng thái]
+    D -->|Chuyển bàn| L[Nhấn nút Chuyển bàn]
+    L --> M[Chọn bàn để chuyển]
+    M --> N[Di chuyển đơn hàng và cập nhật trạng thái]
+    D -->|Hủy khách| O[Nhấn nút Hủy khách]
+    O --> P[Cập nhật trạng thái bàn thành Trống và xóa đơn hàng]
+
+========================================
+
+---
+title: UC-08: Gọi nước cho bàn (Mobile - Phục vụ)
+---
+graph TD
+    A[Mở màn hình Chi tiết bàn] --> B[Nhấn nút Chọn nước]
+    B --> C[Mở màn hình Chọn nước]
+    C --> D[Nhấn nút + trên các món ăn để thêm vào giỏ hàng]
+    D --> E{Điều chỉnh đơn nước?}
+    E -->|Có| F[Thực hiện UC-09: Điều chỉnh đơn nước]
+    E -->|Không| G[Nhấn nút Xem giỏ hàng]
+    F --> G
+    G --> H[Mở màn hình Giỏ hàng]
+    H --> I{(Tùy chọn) Thêm ghi chú}
+    I --> J[Nhấn nút Gửi yêu cầu pha chế]
+    J --> K[Cập nhật trạng thái bàn thành Đang chuẩn bị và quay về Chi tiết bàn]
+
+========================================
+
+---
+title: UC-09: Điều chỉnh đơn nước (Mobile - Phục vụ)
+---
+graph TD
+    A[Đang ở màn hình Giỏ hàng] --> B{Chọn thao tác}
+    B -->|Tăng số lượng| C[Nhấn nút + trên món]
+    C --> D[Tăng số lượng và cập nhật tổng tiền]
+    B -->|Giảm số lượng| E[Nhấn nút - trên món]
+    E --> F{Giảm xuống 0?}
+    F -->|Có| G[Xóa món khỏi giỏ hàng]
+    F -->|Không| H[Giảm số lượng và cập nhật tổng tiền]
+    G --> I[Cập nhật tổng tiền]
+
+========================================
+
+---
+title: UC-10: Theo dõi trạng thái phục vụ (Mobile - Phục vụ)
+---
+graph TD
+    A[Mở màn hình Chi tiết bàn] --> B[Nhấn nút Tiến độ phục vụ]
+    B --> C[Mở màn hình Danh sách món đã phục vụ]
+    C --> D[Xem thông tin món ăn và trạng thái]
+
+========================================
+
+---
+title: UC-11: Yêu cầu thanh toán (Mobile - Phục vụ)
+---
+graph TD
+    A[Mở màn hình Chi tiết bàn, bàn ở trạng thái Đã phục vụ] --> B[Nhấn nút Yêu cầu thanh toán]
+    B --> C[Cập nhật trạng thái bàn thành Chờ thanh toán]
+    C --> D[Đổi tên nút thành Đang chờ thanh toán và không cho nhấn lại]

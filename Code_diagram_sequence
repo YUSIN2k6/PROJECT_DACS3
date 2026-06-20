@@ -1,0 +1,645 @@
+%%{init: {'fontFamily': 'Arial, Helvetica, sans-serif'}}%%
+
+========================================
+---
+title: UC-01: Đăng nhập hệ thống (Web - Quản trị viên/Thu ngân)
+---
+sequenceDiagram
+    actor A as Quản trị viên/Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang đăng nhập
+    UI-->>A: Hiển thị form đăng nhập
+    A->>UI: Nhập Tên đăng nhập + Mật khẩu
+    A->>UI: Nhấn nút Đăng nhập
+    UI->>Server: Gửi thông tin đăng nhập
+    Server->>DB: Kiểm tra thông tin đăng nhập
+    alt Thông tin hợp lệ
+        DB-->>Server: Trả về thông tin người dùng
+        Server->>Server: Tạo session
+        Server-->>UI: Đăng nhập thành công
+        UI->>UI: Chuyển hướng đến trang chính (Bảng điều khiển/Sơ đồ bàn)
+    else Thông tin không hợp lệ
+        DB-->>Server: Trả về lỗi
+        Server-->>UI: Đăng nhập thất bại
+        UI-->>A: Hiển thị thông báo lỗi
+    end
+
+========================================
+---
+title: UC-02: Đăng xuất hệ thống (Web - Quản trị viên/Thu ngân)
+---
+sequenceDiagram
+    actor A as Quản trị viên/Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+
+    A->>UI: Nhấn nút Đăng xuất
+    UI->>Server: Gửi yêu cầu đăng xuất
+    Server->>Server: Hủy session
+    Server-->>UI: Xác nhận đăng xuất thành công
+    UI->>UI: Chuyển hướng về trang đăng nhập
+
+========================================
+---
+title: UC-03: Xem báo cáo thống kê (Web - Quản trị viên)
+---
+sequenceDiagram
+    actor A as Quản trị viên
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Bảng điều khiển
+    UI->>Server: Gửi yêu cầu lấy dữ liệu thống kê
+    Server->>DB: Truy vấn doanh thu, đơn hàng
+    DB-->>Server: Trả về dữ liệu thống kê
+    Server-->>UI: Trả về dữ liệu
+    UI-->>A: Hiển thị báo cáo thống kê
+
+========================================
+---
+title: UC-04: Quản lý nhân sự (Web - Quản trị viên)
+---
+sequenceDiagram
+    actor A as Quản trị viên
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Quản lý nhân sự
+    UI->>Server: Yêu cầu lấy danh sách nhân viên
+    Server->>DB: Truy vấn danh sách nhân viên
+    DB-->>Server: Trả về danh sách
+    Server-->>UI: Trả về danh sách
+    UI-->>A: Hiển thị danh sách nhân viên
+
+    Note over A,DB: Thao tác thêm nhân viên
+    A->>UI: Nhấn nút Thêm nhân viên
+    UI-->>A: Hiển thị form thêm
+    A->>UI: Nhập thông tin nhân viên
+    A->>UI: Nhấn nút Lưu
+    UI->>Server: Gửi dữ liệu nhân viên mới
+    Server->>Server: Kiểm tra dữ liệu
+    Server->>DB: Lưu thông tin nhân viên
+    DB-->>Server: Lưu thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+    Note over A,DB: Thao tác sửa nhân viên
+    A->>UI: Nhấn nút Sửa trên hàng nhân viên
+    UI->>Server: Lấy thông tin nhân viên theo ID
+    Server->>DB: Truy vấn thông tin nhân viên
+    DB-->>Server: Trả về thông tin
+    Server-->>UI: Trả về dữ liệu
+    UI-->>A: Điền dữ liệu cũ vào form
+    A->>UI: Chỉnh sửa thông tin nhân viên
+    A->>UI: Nhấn nút Lưu
+    UI->>Server: Gửi dữ liệu cập nhật
+    Server->>DB: Cập nhật thông tin nhân viên
+    DB-->>Server: Cập nhật thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+    Note over A,DB: Thao tác xoá nhân viên
+    A->>UI: Nhấn nút Xóa trên hàng nhân viên
+    UI-->>A: Hiển thị hộp thoại xác nhận xoá
+    A->>UI: Nhấn Xác nhận
+    UI->>Server: Gửi yêu cầu xoá nhân viên
+    Server->>DB: Xoá thông tin nhân viên
+    DB-->>Server: Xoá thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+========================================
+---
+title: UC-05: Quản lý thực đơn (Web - Quản trị viên)
+---
+sequenceDiagram
+    actor A as Quản trị viên
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Quản lý thực đơn
+    UI->>Server: Yêu cầu lấy danh sách món ăn
+    Server->>DB: Truy vấn danh sách món ăn
+    DB-->>Server: Trả về danh sách
+    Server-->>UI: Trả về danh sách
+    UI-->>A: Hiển thị danh sách món ăn
+
+    Note over A,DB: Thao tác thêm món ăn
+    A->>UI: Nhấn nút Thêm món ăn
+    UI-->>A: Hiển thị form thêm
+    A->>UI: Nhập thông tin món ăn (Tên, Giá, Danh mục,...)
+    A->>UI: Nhấn nút Lưu
+    UI->>Server: Gửi dữ liệu món ăn mới
+    Server->>Server: Kiểm tra dữ liệu
+    Server->>DB: Lưu thông tin món ăn
+    DB-->>Server: Lưu thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+    Note over A,DB: Thao tác sửa món ăn
+    A->>UI: Nhấn nút Sửa trên hàng món ăn
+    UI->>Server: Lấy thông tin món ăn theo ID
+    Server->>DB: Truy vấn thông tin món ăn
+    DB-->>Server: Trả về thông tin
+    Server-->>UI: Trả về dữ liệu
+    UI-->>A: Điền dữ liệu cũ vào form
+    A->>UI: Chỉnh sửa thông tin món ăn
+    A->>UI: Nhấn nút Lưu
+    UI->>Server: Gửi dữ liệu cập nhật
+    Server->>DB: Cập nhật thông tin món ăn
+    DB-->>Server: Cập nhật thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+    Note over A,DB: Thao tác xoá món ăn
+    A->>UI: Nhấn nút Xóa trên hàng món ăn
+    UI-->>A: Hiển thị hộp thoại xác nhận xoá
+    A->>UI: Nhấn Xác nhận
+    UI->>Server: Gửi yêu cầu xoá món ăn
+    Server->>DB: Xoá thông tin món ăn
+    DB-->>Server: Xoá thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+========================================
+---
+title: UC-06: Quản lý thiết lập bàn (Web - Quản trị viên)
+---
+sequenceDiagram
+    actor A as Quản trị viên
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Quản lý thiết lập bàn
+    UI->>Server: Yêu cầu lấy danh sách bàn
+    Server->>DB: Truy vấn danh sách bàn
+    DB-->>Server: Trả về danh sách
+    Server-->>UI: Trả về danh sách
+    UI-->>A: Hiển thị danh sách bàn
+
+    Note over A,DB: Thao tác thêm bàn
+    A->>UI: Nhấn nút Thêm bàn
+    UI->>Server: Gửi yêu cầu tạo bàn mới
+    Server->>Server: Tạo số bàn tự động tăng
+    Server->>DB: Lưu thông tin bàn mới
+    DB-->>Server: Lưu thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+    Note over A,DB: Thao tác xoá bàn
+    A->>UI: Nhập số bàn cần xoá
+    A->>UI: Nhấn nút Xoá
+    UI-->>A: Hiển thị hộp thoại xác nhận
+    A->>UI: Nhấn Xác nhận
+    UI->>Server: Gửi yêu cầu xoá bàn
+    Server->>DB: Tìm và xoá bàn
+    DB-->>Server: Xoá thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật danh sách
+
+========================================
+---
+title: UC-07: Quản lý sơ đồ bàn (Web - Thu ngân)
+---
+sequenceDiagram
+    actor A as Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Sơ đồ bàn
+    UI->>Server: Yêu cầu lấy danh sách bàn và trạng thái
+    Server->>DB: Truy vấn dữ liệu bàn
+    DB-->>Server: Trả về dữ liệu
+    Server-->>UI: Trả về dữ liệu
+    UI-->>A: Hiển thị sơ đồ bàn
+
+    Note over A,DB: Thao tác Đổi bàn
+    A->>UI: Chọn bàn cần đổi
+    A->>UI: Nhấn nút Đổi bàn
+    UI-->>A: Hiển thị modal chọn bàn trống
+    A->>UI: Chọn bàn trống và xác nhận
+    UI->>Server: Gửi yêu cầu đổi bàn
+    Server->>DB: Cập nhật đơn hàng và trạng thái bàn
+    DB-->>Server: Cập nhật thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật sơ đồ bàn
+
+    Note over A,DB: Thao tác Gộp bàn
+    A->>UI: Chọn bàn cần gộp
+    A->>UI: Nhấn nút Gộp bàn
+    UI-->>A: Hiển thị modal chọn bàn có khách
+    A->>UI: Chọn bàn và xác nhận
+    UI->>Server: Gửi yêu cầu gộp bàn
+    Server->>DB: Gộp đơn hàng 2 bàn và cập nhật trạng thái
+    DB-->>Server: Cập nhật thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật sơ đồ bàn
+
+    Note over A,DB: Thao tác Hủy khách
+    A->>UI: Chọn bàn cần hủy
+    A->>UI: Nhấn nút Hủy khách
+    UI-->>A: Hiển thị hộp thoại xác nhận
+    A->>UI: Nhấn Xác nhận
+    UI->>Server: Gửi yêu cầu hủy
+    Server->>DB: Cập nhật trạng thái bàn về Trống và xóa đơn hàng
+    DB-->>Server: Cập nhật thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Cập nhật sơ đồ bàn
+
+========================================
+---
+title: UC-08: Gọi nước cho bàn (Web - Thu ngân)
+---
+sequenceDiagram
+    actor A as Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Đơn mang về
+    UI->>Server: Yêu cầu lấy thực đơn
+    Server->>DB: Truy vấn thực đơn
+    DB-->>Server: Trả về thực đơn
+    Server-->>UI: Trả về thực đơn
+    UI-->>A: Hiển thị thực đơn
+
+    Note over A,DB: Thêm món vào giỏ hàng
+    A->>UI: Chọn loại hình đơn (Thêm món cho bàn / Đơn mang về)
+    A->>UI: Chọn bàn (nếu là Thêm món cho bàn)
+    A->>UI: Nhấn các món ăn để thêm vào giỏ
+    UI->>UI: Cập nhật giỏ hàng và tổng tiền
+
+    Note over A,DB: Gửi yêu cầu pha chế / Thanh toán
+    A->>UI: Nhấn nút Yêu cầu pha chế / Thanh toán
+    UI->>Server: Gửi dữ liệu đơn hàng
+    Server->>DB: Lưu đơn hàng / hóa đơn
+    Server->>DB: Cập nhật trạng thái bàn (nếu cần)
+    DB-->>Server: Lưu thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+
+========================================
+---
+title: UC-09: Điều chỉnh đơn nước (Web - Thu ngân)
+---
+sequenceDiagram
+    actor A as Thu ngân
+    participant UI as Giao diện Web
+
+    A->>UI: Đang ở trang Đơn mang về, giỏ hàng có món
+    Note over A,UI: Tăng số lượng
+    A->>UI: Nhấn món ăn thêm lần nữa
+    UI->>UI: Tăng số lượng món trong giỏ
+    UI->>UI: Tính lại tổng tiền
+    UI-->>A: Hiển thị thay đổi
+
+    Note over A,UI: Xóa món
+    A->>UI: Nhấn nút Bỏ (x) trên hàng món
+    UI->>UI: Xóa món khỏi giỏ hàng
+    UI->>UI: Tính lại tổng tiền
+    UI-->>A: Hiển thị thay đổi
+
+========================================
+---
+title: UC-10: Theo dõi trạng thái phục vụ (Web - Thu ngân)
+---
+sequenceDiagram
+    actor A as Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Sơ đồ bàn
+    A->>UI: Nhấn chọn bàn có đơn hàng
+    UI->>UI: Hiển thị sidebar chi tiết bàn
+    UI-->>A: Hiển thị danh sách món và trạng thái (Chưa phục vụ / Đã phục vụ)
+
+    Note over A,DB: Đánh dấu món đã phục vụ
+    A->>UI: Nhấn nút Đã phục vụ trên món ăn
+    UI->>Server: Gửi yêu cầu cập nhật trạng thái món
+    Server->>DB: Cập nhật trạng thái món ăn
+    Server->>DB: Kiểm tra nếu tất cả món đã phục vụ → cập nhật trạng thái bàn
+    DB-->>Server: Cập nhật thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thay đổi
+
+========================================
+---
+title: UC-12: Thanh toán đơn mang về (Web - Thu ngân)
+---
+sequenceDiagram
+    actor A as Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Đơn mang về
+    A->>UI: Chọn radio Mang về / Khác
+    A->>UI: Chọn món ăn vào giỏ hàng
+    A->>UI: Nhấn nút Thanh toán
+    UI->>Server: Gửi dữ liệu đơn hàng
+    Server->>DB: Lưu hóa đơn vào lịch sử
+    DB-->>Server: Lưu thành công
+    Server-->>UI: Trả về phản hồi và mã hóa đơn
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Xóa giỏ hàng
+
+========================================
+---
+title: UC-13: Thanh toán hóa đơn (Web - Thu ngân)
+---
+sequenceDiagram
+    actor A as Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Thanh toán
+    A->>UI: Chọn bàn cần thanh toán
+    UI->>Server: Yêu cầu lấy đơn hàng của bàn
+    Server->>DB: Truy vấn đơn hàng
+    DB-->>Server: Trả về đơn hàng
+    Server-->>UI: Trả về đơn hàng
+    UI-->>A: Hiển thị chi tiết hóa đơn
+
+    A->>UI: Nhấn nút Thanh toán
+    UI-->>A: Hiển thị hộp thoại xác nhận
+    A->>UI: Nhấn Xác nhận
+    UI->>Server: Gửi yêu cầu thanh toán
+    Server->>DB: Lưu hóa đơn vào lịch sử
+    Server->>DB: Cập nhật trạng thái bàn thành Trống
+    Server->>DB: Xóa đơn hàng hiện tại của bàn
+    DB-->>Server: Hoàn thành
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Quay về trang Sơ đồ bàn
+
+========================================
+---
+title: UC-14: Điều chỉnh kho (Web - Thu ngân)
+---
+sequenceDiagram
+    actor A as Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Điều chỉnh kho
+    UI->>Server: Yêu cầu lấy danh sách món ăn
+    Server->>DB: Truy vấn danh sách món ăn
+    DB-->>Server: Trả về danh sách
+    Server-->>UI: Trả về danh sách
+    UI-->>A: Hiển thị danh sách món ăn
+
+    A->>UI: Chọn món từ dropdown
+    A->>UI: Chọn trạng thái mới (Còn hàng / Hết hàng)
+    A->>UI: Nhấn nút Cập nhật
+    UI->>Server: Gửi yêu cầu cập nhật trạng thái
+    Server->>DB: Cập nhật trạng thái món ăn
+    DB-->>Server: Cập nhật thành công
+    Server-->>UI: Trả về phản hồi
+    UI-->>A: Hiển thị thông báo thành công
+    UI->>UI: Làm mới trang
+
+========================================
+---
+title: UC-15: Xem lịch sử giao dịch (Web - Quản trị viên & Thu ngân)
+---
+sequenceDiagram
+    actor A as Quản trị viên/Thu ngân
+    participant UI as Giao diện Web
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>UI: Mở trang Lịch sử
+    UI->>Server: Yêu cầu lấy danh sách hóa đơn
+    Server->>DB: Truy vấn lịch sử hóa đơn
+    DB-->>Server: Trả về danh sách
+    Server-->>UI: Trả về danh sách
+    UI-->>A: Hiển thị danh sách hóa đơn
+
+    Note over A,DB: Xem chi tiết hóa đơn
+    A->>UI: Nhấn nút Xem trên hàng hóa đơn
+    UI-->>A: Hiển thị thông tin chi tiết hóa đơn ở sidebar
+    A->>UI: Nhấn nút Xem chi tiết
+    UI-->>A: Mở modal hiển thị danh sách món trong hóa đơn
+
+    Note over A,DB: In hóa đơn (chỉ Thu ngân)
+    A->>UI: Nhấn nút In lại hóa đơn
+    UI->>UI: Mở cửa sổ in
+    UI-->>A: Hiển thị nội dung hóa đơn để in
+
+    Note over A,DB: Xuất Excel (chỉ Quản trị viên)
+    A->>UI: Chọn khoảng thời gian cần xuất
+    A->>UI: Nhấn nút Xuất Excel
+    UI->>UI: Tạo file Excel và tải xuống
+
+========================================
+---
+title: UC-01: Đăng nhập hệ thống (Mobile - Phục vụ)
+---
+sequenceDiagram
+    actor A as Phục vụ
+    participant Mobile as Ứng dụng Mobile
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>Mobile: Mở ứng dụng
+    Mobile-->>A: Hiển thị màn hình đăng nhập
+    A->>Mobile: Nhập Tên đăng nhập + Mật khẩu
+    A->>Mobile: Nhấn nút Đăng nhập
+    Mobile->>Server: Gửi thông tin đăng nhập
+    Server->>DB: Kiểm tra thông tin đăng nhập
+    alt Thông tin hợp lệ
+        DB-->>Server: Trả về thông tin người dùng
+        Server->>Mobile: Đăng nhập thành công
+        Mobile-->>A: Chuyển đến màn hình Sơ đồ bàn
+    else Thông tin không hợp lệ
+        DB-->>Server: Trả về lỗi
+        Server-->>Mobile: Đăng nhập thất bại
+        Mobile-->>A: Hiển thị thông báo lỗi
+    end
+
+========================================
+---
+title: UC-07: Quản lý sơ đồ bàn (Mobile - Phục vụ)
+---
+sequenceDiagram
+    actor A as Phục vụ
+    participant Mobile as Ứng dụng Mobile
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>Mobile: Mở màn hình Sơ đồ bàn
+    Mobile->>Server: Yêu cầu lấy danh sách bàn và trạng thái
+    Server->>DB: Truy vấn dữ liệu bàn
+    DB-->>Server: Trả về dữ liệu
+    Server-->>Mobile: Trả về dữ liệu
+    Mobile-->>A: Hiển thị sơ đồ bàn
+
+    A->>Mobile: Nhấn vào bàn cần thao tác
+    Mobile-->>A: Mở màn hình Chi tiết bàn
+
+    Note over A,DB: Đánh dấu Có khách
+    A->>Mobile: Nhấn nút Có khách
+    Mobile->>Server: Gửi yêu cầu cập nhật trạng thái
+    Server->>DB: Cập nhật trạng thái bàn thành Có khách
+    DB-->>Server: Cập nhật thành công
+    Server-->>Mobile: Trả về phản hồi
+    Mobile-->>A: Hiển thị thay đổi
+
+    Note over A,DB: Thao tác Gộp bàn
+    A->>Mobile: Nhấn nút Gộp bàn
+    Mobile-->>A: Hiển thị màn hình chọn bàn
+    A->>Mobile: Nhấn vào bàn để gộp
+    Mobile->>Server: Gửi yêu cầu gộp
+    Server->>DB: Cập nhật trạng thái bàn và đơn hàng
+    DB-->>Server: Cập nhật thành công
+    Server-->>Mobile: Trả về phản hồi
+    Mobile-->>A: Hiển thị thông báo và quay về
+
+    Note over A,DB: Thao tác Chuyển bàn
+    A->>Mobile: Nhấn nút Chuyển bàn
+    Mobile-->>A: Hiển thị màn hình chọn bàn
+    A->>Mobile: Nhấn nút Đổi trên bàn cần di chuyển
+    A->>Mobile: Nhấn nút Đổi trên bàn trống
+    Mobile->>Server: Gửi yêu cầu chuyển
+    Server->>DB: Di chuyển đơn hàng và cập nhật trạng thái
+    DB-->>Server: Cập nhật thành công
+    Server-->>Mobile: Trả về phản hồi
+    Mobile-->>A: Hiển thị thông báo và quay về
+
+    Note over A,DB: Thao tác Hủy khách
+    A->>Mobile: Nhấn nút Hủy khách
+    Mobile-->>A: Hiển thị hộp thoại xác nhận
+    A->>Mobile: Nhấn Xác nhận
+    Mobile->>Server: Gửi yêu cầu hủy
+    Server->>DB: Cập nhật trạng thái bàn về Trống và xóa đơn hàng
+    DB-->>Server: Cập nhật thành công
+    Server-->>Mobile: Trả về phản hồi
+    Mobile-->>A: Hiển thị thông báo và quay về
+
+========================================
+---
+title: UC-08: Gọi nước cho bàn (Mobile - Phục vụ)
+---
+sequenceDiagram
+    actor A as Phục vụ
+    participant Mobile as Ứng dụng Mobile
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>Mobile: Đang ở màn hình Chi tiết bàn
+    A->>Mobile: Nhấn nút Chọn nước
+    Mobile->>Server: Yêu cầu lấy thực đơn
+    Server->>DB: Truy vấn thực đơn
+    DB-->>Server: Trả về thực đơn
+    Server-->>Mobile: Trả về thực đơn
+    Mobile-->>A: Hiển thị màn hình Chọn nước
+
+    A->>Mobile: Nhấn nút + trên món ăn để thêm vào giỏ
+    Mobile->>Mobile: Cập nhật giỏ hàng
+    A->>Mobile: Nhấn nút Xem giỏ hàng
+    Mobile-->>A: Hiển thị màn hình Giỏ hàng
+
+    A->>Mobile: Nhấn nút Gửi yêu cầu pha chế
+    Mobile->>Server: Gửi đơn hàng
+    Server->>DB: Lưu đơn hàng
+    Server->>DB: Cập nhật trạng thái bàn thành Đang chuẩn bị
+    DB-->>Server: Hoàn thành
+    Server-->>Mobile: Trả về phản hồi
+    Mobile-->>A: Hiển thị thông báo thành công
+    Mobile->>Mobile: Quay về màn hình Chi tiết bàn
+
+========================================
+---
+title: UC-09: Điều chỉnh đơn nước (Mobile - Phục vụ)
+---
+sequenceDiagram
+    actor A as Phục vụ
+    participant Mobile as Ứng dụng Mobile
+
+    A->>Mobile: Đang ở màn hình Giỏ hàng
+    Note over A,Mobile: Tăng số lượng
+    A->>Mobile: Nhấn nút + trên món
+    Mobile->>Mobile: Tăng số lượng
+    Mobile->>Mobile: Tính lại tổng tiền
+    Mobile-->>A: Hiển thị thay đổi
+
+    Note over A,Mobile: Giảm số lượng / Xóa món
+    A->>Mobile: Nhấn nút - trên món
+    alt Giảm xuống 0
+        Mobile->>Mobile: Xóa món khỏi giỏ
+    else Giảm xuống > 0
+        Mobile->>Mobile: Giảm số lượng
+    end
+    Mobile->>Mobile: Tính lại tổng tiền
+    Mobile-->>A: Hiển thị thay đổi
+
+========================================
+---
+title: UC-10: Theo dõi trạng thái phục vụ (Mobile - Phục vụ)
+---
+sequenceDiagram
+    actor A as Phục vụ
+    participant Mobile as Ứng dụng Mobile
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>Mobile: Đang ở màn hình Chi tiết bàn
+    A->>Mobile: Nhấn nút Tiến độ phục vụ
+    Mobile->>Server: Yêu cầu lấy đơn hàng của bàn
+    Server->>DB: Truy vấn đơn hàng
+    DB-->>Server: Trả về đơn hàng
+    Server-->>Mobile: Trả về đơn hàng
+    Mobile-->>A: Hiển thị màn hình Danh sách món đã phục vụ
+    Mobile-->>A: Hiển thị trạng thái từng món (Chưa phục vụ / Đã phục vụ)
+
+========================================
+---
+title: UC-11: Yêu cầu thanh toán (Mobile - Phục vụ)
+---
+sequenceDiagram
+    actor A as Phục vụ
+    participant Mobile as Ứng dụng Mobile
+    participant Server as Server
+    participant DB as Firebase DB
+
+    A->>Mobile: Đang ở màn hình Chi tiết bàn (bàn ở trạng thái Đã phục vụ)
+    A->>Mobile: Nhấn nút Yêu cầu thanh toán
+    Mobile->>Server: Gửi yêu cầu cập nhật trạng thái bàn
+    Server->>DB: Cập nhật trạng thái bàn thành Chờ thanh toán
+    DB-->>Server: Cập nhật thành công
+    Server-->>Mobile: Trả về phản hồi
+    Mobile->>Mobile: Đổi tên nút thành "Đang chờ thanh toán (nhấn để huỷ)"
+    Mobile-->>A: Hiển thị thay đổi
+
+    Note over A,DB: Thao tác huỷ yêu cầu thanh toán
+    A->>Mobile: Nhấn nút "Đang chờ thanh toán (nhấn để huỷ)"
+    Mobile->>Server: Gửi yêu cầu huỷ cập nhật trạng thái
+    Server->>DB: Cập nhật trạng thái bàn về Đã phục vụ
+    DB-->>Server: Cập nhật thành công
+    Server-->>Mobile: Trả về phản hồi
+    Mobile->>Mobile: Đổi tên nút về "Yêu cầu thanh toán"
+    Mobile-->>A: Hiển thị thay đổi
+
+========================================
